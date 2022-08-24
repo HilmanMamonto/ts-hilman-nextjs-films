@@ -2,10 +2,10 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useUpdateAge } from "./_app";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const { state, updateAge } = useUpdateAge();
-
   return (
     <div className={styles.container}>
       <Head>
@@ -14,6 +14,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <button onClick={updateAge}>AGE : {state.age}</button>
+      <Link href="/category">To category</Link>
     </div>
   );
 };

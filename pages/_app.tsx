@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 
 type InitialState = {
   age: number;
@@ -16,13 +16,19 @@ const initialState: InitialState = {
 function reducer(state: InitialState, action: Action) {
   switch (action.type) {
     case "UPDATE_AGE":
-      return { age: state.age + 1 };
+      return { ...state, age: state.age + 1 };
     default:
       return state;
   }
 }
 
-export const RootContext = createContext({});
+type Dispatch = (action: Action) => void;
+
+export const RootContext = createContext<{
+  state: InitialState;
+  dispatch: Dispatch;
+}>({ state: initialState, dispatch: () => {} });
+
 const Provider = RootContext.Provider;
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -36,7 +42,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export const useUpdateAge = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const { state, dispatch } = useContext(RootContext);
   return { state, updateAge: () => dispatch({ type: "UPDATE_AGE" }) };
 };
 
