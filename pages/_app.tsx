@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import { createContext, useContext, useReducer } from "react";
+import "../styles/globals.css";
 
 type InitialState = {
   age: number;
@@ -7,7 +8,7 @@ type InitialState = {
 
 type Action = {
   type: string;
-  payload?: string | number | {} | [];
+  payload: any;
 };
 
 const initialState: InitialState = {
@@ -15,9 +16,10 @@ const initialState: InitialState = {
 };
 
 function reducer(state: InitialState, action: Action) {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case "UPDATE_AGE":
-      return { ...state, age: state.age + 1 };
+      return { ...state, age: state.age + payload };
     default:
       return state;
   }
@@ -46,7 +48,8 @@ export const useUpdateAge = () => {
   const { state, dispatch } = useContext(RootContext);
   return {
     state,
-    updateAge: (payload: Action) => dispatch({ type: "UPDATE_AGE", payload }),
+    updateAge: (payload: number = 1) =>
+      dispatch({ type: "UPDATE_AGE", payload }),
   };
 };
 
