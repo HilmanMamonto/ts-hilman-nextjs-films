@@ -7,6 +7,7 @@ type InitialState = {
 
 type Action = {
   type: string;
+  payload?: string | number | object;
 };
 
 const initialState: InitialState = {
@@ -43,7 +44,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 export const useUpdateAge = () => {
   const { state, dispatch } = useContext(RootContext);
-  return { state, updateAge: () => dispatch({ type: "UPDATE_AGE" }) };
+  return {
+    state,
+    updateAge: (payload: Action) => dispatch({ type: "UPDATE_AGE", payload }),
+  };
 };
 
 export default MyApp;
