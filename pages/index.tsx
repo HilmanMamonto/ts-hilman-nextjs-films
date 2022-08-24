@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useUpdateAge } from "./_app";
 import Link from "next/link";
+import { useUpdateAge } from "../context/hooks/useUpdateAge";
 
 const Home: NextPage = () => {
-  const { state, updateAge } = useUpdateAge();
+  const { age, updateAge } = useUpdateAge();
   return (
     <div>
       <Head>
@@ -16,7 +16,7 @@ const Home: NextPage = () => {
         className="bg-blue-500 px-2 py-2 rounded-md"
         onClick={() => updateAge(10)}
       >
-        AGE : {state.age}
+        AGE : {age}
       </button>
       <Link href="/category">To category</Link>
     </div>
