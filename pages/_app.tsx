@@ -16,13 +16,13 @@ const initialState: InitialState = {
 function reducer(state: InitialState, action: Action) {
   switch (action.type) {
     case "UPDATE_AGE":
-      return { age: state.age };
+      return { age: state.age + 1 };
     default:
       return state;
   }
 }
 
-const RootContext = createContext({});
+export const RootContext = createContext({});
 const Provider = RootContext.Provider;
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -34,5 +34,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     </Provider>
   );
 }
+
+export const useUpdateAge = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return { state, updateAge: () => dispatch({ type: "UPDATE_AGE" }) };
+};
 
 export default MyApp;
