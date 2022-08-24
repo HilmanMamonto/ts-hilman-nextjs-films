@@ -7,7 +7,7 @@ type InitialState = {
 
 type Action = {
   type: string;
-  payload?: string | number | object;
+  payload?: string | number | {} | [];
 };
 
 const initialState: InitialState = {
