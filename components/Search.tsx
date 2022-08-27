@@ -12,7 +12,7 @@ const Search = () => {
     : "invisible opacity-0";
 
   useEffect(() => {
-    fetchData("movie").then((res) => setData(res));
+    fetchData("movie").then((result) => setData(result));
   }, [value]);
 
   return (
@@ -26,8 +26,8 @@ const Search = () => {
           placeholder="Search Movies"
         ></input>
         <span className="border-l-2 opacity-10 h-[20px]"></span>
-        <button className="px-5 h-full items-center opacity-50">
-          <Image className="w-[16px]" src="/icons/search.svg" alt=""></Image>
+        <button className="flex px-5 h-full items-center opacity-50">
+          <Image height={16} width={16} src="/icons/search.svg" alt=""></Image>
         </button>
       </div>
       <div
@@ -39,7 +39,7 @@ const Search = () => {
         {data.length === 0 && (
           <div className="text-center">Opss, Data Not Found!</div>
         )}
-        <div className="flex flex-col gap-4 max-h-[400px] overflow-auto">
+        <ul className="flex flex-col gap-4 max-h-[400px] overflow-auto">
           {data.map(({ original_title, poster_path, vote_average, id }, i) => {
             let src = poster_path
               ? "https://image.tmdb.org/t/p/w500" + poster_path
@@ -51,15 +51,22 @@ const Search = () => {
                 href={"/view/" + id}
                 className="flex gap-4 items-center"
               >
-                <Image className="w-[100px] rounded-md" src={src} alt="" />
-                <div className="flex flex-col">
-                  <span className="text-lg">{original_title}</span>
-                  <span className="text-sm">Rate : {vote_average}</span>
+                <div>
+                  <Image
+                    className="w-[100px] h-auto rounded-md"
+                    layout="fill"
+                    src={src}
+                    alt=""
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-lg">{original_title}</span>
+                    <span className="text-sm">Rate : {vote_average}</span>
+                  </div>
                 </div>
               </Link>
             );
           })}
-        </div>
+        </ul>
       </div>
     </div>
   );
