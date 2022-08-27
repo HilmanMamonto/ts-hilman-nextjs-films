@@ -1,5 +1,5 @@
 export const fetchVideos = async <T>(category: T, id: T) => {
-  const urlVideos =
+  const url =
     "https://api.themoviedb.org/3/" +
     category +
     "/" +
@@ -8,9 +8,9 @@ export const fetchVideos = async <T>(category: T, id: T) => {
     process.env.API_KEY +
     "&language=en-US";
   try {
-    const videosResponse = await fetch(urlVideos);
-    const videosResults = await videosResponse.json();
-    const videos = videosResults.results;
+    const response = await fetch(url);
+    const results = await response.json();
+    const videos = results.results;
     return videos;
   } catch (error) {
     console.log(error);

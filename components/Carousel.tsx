@@ -1,24 +1,27 @@
-import { useState, useRef, useEffect, ChangeEvent } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import {
+  useState,
+  useRef,
+  useEffect,
+  UIEventHandler,
+  ComponentType,
+} from "react";
 import Image from "next/image";
 
 type TCarousel = {
-  data: [];
+  data: any[];
   className: string;
 };
 
-const Carousel = ({ data, className }: TCarousel) => {
+const Carousel: ComponentType<TCarousel> = ({ data = [], className }) => {
   const [current, setCurrent] = useState(0);
   const ref = useRef<HTMLUListElement>(null!);
   const refIndicator = useRef<HTMLUListElement>(null!);
 
-  console.log(typeof document);
-
   useEffect(() => {
     // for button next and prev
     if (ref) {
-      //   const video = document.querySelector("#video" + current);
-      const video = document.querySelector("#video1");
-      console.log("video ", video);
+      const video = document.querySelector("#video" + current) as HTMLElement;
       if (video) {
         ref.current.scrollLeft = video.offsetLeft;
       }
@@ -26,7 +29,9 @@ const Carousel = ({ data, className }: TCarousel) => {
 
     // for set indicator activate
     if (refIndicator) {
-      const indicator = document.querySelector("#indicator" + current);
+      const indicator = document.querySelector(
+        "#indicator" + current
+      ) as HTMLElement;
       if (indicator) {
         const { offsetWidth } = refIndicator.current;
         const halfOfOffsetWidth = offsetWidth / 2;
@@ -34,13 +39,13 @@ const Carousel = ({ data, className }: TCarousel) => {
           indicator.offsetLeft - halfOfOffsetWidth;
       }
     }
-  }, [current, ref]);
+  }, [current]);
 
-  const handleScroll = (e: ChangeEvent<Element>) => {
-    const { scrollLeft } = e.target;
+  const handleScroll: UIEventHandler<HTMLUListElement> = (e) => {
+    const { scrollLeft } = e.target as Element;
     let i = 0;
     while (i < data.length) {
-      const video = document.querySelector("#video" + i);
+      const video = document.querySelector("#video" + i) as HTMLElement;
       if (video && scrollLeft === video.offsetLeft) {
         setCurrent(i);
         break;
@@ -59,7 +64,7 @@ const Carousel = ({ data, className }: TCarousel) => {
   return (
     <section className={className}>
       <div className="flex justify-between mb-5 items-center">
-        <h2 className="text-2xl">Youtube</h2>
+        <h2 className="text-2xl">On Youtube</h2>
         <div className="max-w-[100px] lg:max-w-[200px]">
           <ul
             ref={refIndicator}
@@ -122,18 +127,18 @@ const Carousel = ({ data, className }: TCarousel) => {
         <button
           hidden={current === 0}
           onClick={() => setCurrent(current > 0 ? current - 1 : current)}
-          className="absolute z-20 left-0  ml-5 bg-white bg-opacity-10 backdrop-blur-[1px] p-2 rounded-full"
+          className="inline-flex absolute z-20 left-0  ml-5 bg-white bg-opacity-10 backdrop-blur-[1px] p-2 rounded-full"
         >
-          <img className="w-[16px]" src="/icons/arrow-left.svg" alt="" />
+          <Image width={16} height={16} src="/icons/arrow-left.svg" alt="" />
         </button>
         <button
           hidden={current === data.length - 1}
           onClick={() =>
             setCurrent(current < data.length - 1 ? current + 1 : current)
           }
-          className="absolute z-20 right-0  mr-5 bg-white bg-opacity-10 backdrop-blur-[1px] p-2 rounded-full"
+          className="inline-flex absolute z-20 right-0  mr-5 bg-white bg-opacity-10 backdrop-blur-[1px] p-2 rounded-full"
         >
-          <img className="w-[16px]" src="/icons/arrow-right.svg" alt="" />
+          <Image width={16} height={16} src="/icons/arrow-right.svg" alt="" />
         </button>
       </div>
     </section>

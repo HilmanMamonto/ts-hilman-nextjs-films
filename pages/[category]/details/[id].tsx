@@ -1,18 +1,35 @@
-import {
-  GetServerSideProps,
-  GetStaticProps,
-  InferGetServerSidePropsType,
-} from "next";
+import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
-import Button from "../../../components/Button";
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import { fetchFilmDetails } from "../../../fetch/fetchFilmDetails";
-import Carousel from "../../../components/Carousel";
+import { fetchVideos, fetchFilmDetails, fetchWatchProviders } from "fetch";
+import { BASE_IMG_ORIGINAL } from "globalConst";
+import Carousel from "components/Carousel";
+import Button from "components/Button";
+import SeasonsList from "components/SeasonsList";
+import WatchProviders from "components/WatchProviders";
 
-type PropsType = InferGetServerSidePropsType<typeof getServerSideProps>;
+type TFilm = {
+  release_date: string;
+  first_air_date: string;
+  title: string;
+  name: string;
+  poster_path: string;
+  backdrop_path: string;
+  genres: any[];
+  overview: any[];
+  runtime: number;
+  vote_average: number;
+  seasons: any[];
+};
 
-const Details = ({ film, videos }: PropsType) => {
+type TDetails = {
+  film: TFilm;
+  videos: any[];
+  watchProviders: any[];
+};
+
+const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
   const {
     release_date,
     first_air_date,
@@ -20,16 +37,19 @@ const Details = ({ film, videos }: PropsType) => {
     name,
     poster_path,
     backdrop_path,
+    genres,
+    overview,
+    runtime,
+    vote_average,
+    seasons,
   } = film;
-  console.log(videos);
 
   const [imgAs, setImgAs] = useState("");
   const titleDisplay = title ? title : name;
   let release = "";
   if (release_date) release_date.split("-")[0];
   if (first_air_date) first_air_date.split("-")[0];
-  const baseImg = "https://image.tmdb.org/t/p/original";
-  const imgUrl = baseImg + imgAs;
+  const imgUrl = BASE_IMG_ORIGINAL + imgAs;
 
   useEffect(() => {
     window.innerWidth < 500 ? setImgAs(poster_path) : setImgAs(backdrop_path);
@@ -44,7 +64,7 @@ const Details = ({ film, videos }: PropsType) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="snap-start h-screen relative w-full text-white bg-cover">
-        <div className="w-full h-full">
+        <div className="relative w-full h-full">
           {imgAs && (
             <Image
               layout="fill"
@@ -53,6 +73,7 @@ const Details = ({ film, videos }: PropsType) => {
               src={imgUrl}
               alt={titleDisplay}
               quality={100}
+              priority
             />
           )}
         </div>
@@ -62,14 +83,14 @@ const Details = ({ film, videos }: PropsType) => {
             {titleDisplay}
           </h1>
           <div className="flex items-center gap-2 mb-5 text-sm font-light">
-            <span>{film.vote_average}</span>
+            <span>{vote_average}</span>
             <span className="w-[3px] h-[3px] bg-white rounded-full" />
-            <span>{film.runtime} minutes</span>
+            <span>{runtime} minutes</span>
             <span className="w-[3px] h-[3px] bg-white rounded-full" />
             <span>{release}</span>
           </div>
           <ul className="flex gap-4 flex-wrap text-sm mb-5">
-            {film.genres.map(({ name }: typeof film, i: number) => {
+            {genres.map(({ name }: typeof film, i: number) => {
               return (
                 <li
                   key={i}
@@ -80,8 +101,8 @@ const Details = ({ film, videos }: PropsType) => {
               );
             })}
           </ul>
-          <p className="tracking-wide max-w-[270px] max-h-[100px] overflow-auto md:max-h-fit md:max-w-[600px] mb-10 font-light">
-            {film.overview}
+          <p className="tracking-wide max-w-[270px] max-h-[100px] overflow-auto md:max-w-[600px] mb-10 font-light">
+            {overview}
           </p>
           <div className="flex gap-3">
             <Button label="Rate Now" />
@@ -90,33 +111,33 @@ const Details = ({ film, videos }: PropsType) => {
         </div>
       </section>
       <section className="snap-start bg-black text-white w-full pt-20 min-h-screen">
-        {videos && <Carousel className="px-3 lg:px-20" data={videos} />}
-        {/* {data.seasons && <SeasonsList data={data.seasons} />}
-      <Videos /> */}
-        {/* {watchProviders && (
-        <ItemsGrid title="Watch Providers" data={watchProviders.flatrate} />
-      )} */}
+        {videos.length > 0 && (
+          <Carousel className="mb-20 px-3 lg:px-20" data={videos} />
+        )}
+        {seasons && <SeasonsList data={seasons} />}
+        {/* <Videos /> */}
+        {watchProviders && (
+          <WatchProviders
+            title="Watch Providers"
+            data={watchProviders.flatrate}
+          />
+        )}
       </section>
     </main>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps<TDetails> = async (ctx) => {
   const { category, id } = ctx.query;
-  const film = await fetchFilmDetails<typeof category & typeof id>(
-    category,
-    id
-  );
-
-  const videos = await fetchFilmDetails<typeof category & typeof id>(
-    category,
-    id
-  );
-
+  type CategoryId = typeof category & typeof id;
+  const film = await fetchFilmDetails<CategoryId>(category, id);
+  const videos = await fetchVideos<CategoryId>(category, id);
+  const watchProviders = await fetchWatchProviders<CategoryId>(category, id);
   return {
     props: {
       film,
       videos,
+      watchProviders,
     },
   };
 };

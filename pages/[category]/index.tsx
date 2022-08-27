@@ -1,20 +1,28 @@
-import type {
-  GetServerSideProps,
-  InferGetServerSidePropsType,
-  NextPage,
-} from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Card from "../../components/Card";
 import Header from "../../components/Header";
 import { fetchData } from "../../fetch/fetchData";
+import { BASE_IMG_W500 } from "../../globalConst";
 
-const Category: NextPage = (
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) => {
+type TCategory = {
+  films: any[];
+};
+
+type TFilms = {
+  original_title: string;
+  original_name: string;
+  name: string;
+  poster_path: string;
+  vote_average: number;
+  profile_path: string;
+  id: number;
+};
+
+const Category: NextPage<TCategory> = ({ films }) => {
   const router = useRouter();
   const { category } = router.query;
-  const { films } = props;
 
   return (
     <div className="bg-black h-full overflow-y-auto">
@@ -43,15 +51,13 @@ const Category: NextPage = (
                 vote_average,
                 profile_path,
                 id,
-              }: typeof films,
-              i: number
+              }: TFilms,
+              i
             ) => {
-              const src = poster_path
-                ? "https://image.tmdb.org/t/p/w500" + poster_path
-                : profile_path
-                ? "https://image.tmdb.org/t/p/w500" + profile_path
-                : "";
-              let title = "";
+              let src: string = "";
+              if (poster_path) src = BASE_IMG_W500 + poster_path;
+              if (profile_path) src = BASE_IMG_W500 + profile_path;
+              let title: string = "";
               if (original_title) title = original_title;
               if (original_name) title = original_name;
               if (name) title = name;
@@ -75,8 +81,10 @@ const Category: NextPage = (
 
 export default Category;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps<TCategory> = async (
+  ctx
+) => {
   const { category } = ctx.query;
-  const results = await fetchData<typeof category>(category);
+  const results: any[] = await fetchData<typeof category>(category);
   return { props: { films: results } };
 };
