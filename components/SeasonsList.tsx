@@ -10,7 +10,7 @@ const SeasonsList: ComponentType<TSeasonsList> = ({ data }) => {
   const gridCols =
     data.length >= 4 ? "grid-cols-4" : "grid-cols-" + (data.length + 1);
   return (
-    <div className="flex items-center flex-col mb-20">
+    <div className="flex items-center flex-col pb-20">
       <span className="text-3xl mb-4">Seasons</span>
       <div className={"grid gap-x-3 gap-y-4 " + gridCols}>
         {data.map(({ name, poster_path }, i) => {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 type TCard = {
   id: number;
@@ -10,13 +11,19 @@ type TCard = {
 };
 
 const Card = ({ id, param, title = "", rate = 0, src }: TCard) => {
+  const router = useRouter();
+  let href: string = "";
+  if (param != "person") href = "/" + param + "/details/" + id;
+  if (param === "person") href = "/person/details/" + id;
   return (
-    <Link href={"/" + param + "/details/" + id}>
+    <Link href={href}>
       <a>
         <div className="relative">
-          <span className="bg-white absolute z-[2] rounded-md w-[30px] md:w-[25px] text-center right-3 top-2 opacity-50 text-sm md:text-xs border-1 text-black">
-            {rate}
-          </span>
+          {param != "person" && (
+            <span className="bg-white absolute z-[2] rounded-md w-[30px] md:w-[25px] text-center right-3 top-2 opacity-50 text-sm md:text-xs border-1 text-black">
+              {rate}
+            </span>
+          )}
           <div className="relative w-full rounded-[10px] bg-black-500 aspect-[2/3]">
             <Image
               className="rounded-[10px]"
