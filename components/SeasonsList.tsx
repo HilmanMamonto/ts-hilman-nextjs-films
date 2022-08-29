@@ -1,6 +1,6 @@
 import { ComponentType } from "react";
 import Image from "next/image";
-import { BASE_IMG_ORIGINAL, BASE_IMG_W500 } from "../globalConst";
+import { BASE_IMG_W500 } from "globalConst";
 
 type TSeasonsList = {
   data: any[];
@@ -15,6 +15,7 @@ const SeasonsList: ComponentType<TSeasonsList> = ({ data }) => {
       <div className={"grid gap-x-3 gap-y-4 " + gridCols}>
         {data.map(({ name, poster_path }, i) => {
           const src = poster_path ? BASE_IMG_W500 + poster_path : "";
+          if (!src) return;
           return (
             <div className="w-fit" key={i}>
               <div className="relative">
@@ -23,7 +24,7 @@ const SeasonsList: ComponentType<TSeasonsList> = ({ data }) => {
                     layout="fill"
                     className="rounded-t-lg"
                     src={src}
-                    alt=""
+                    alt={name}
                   />
                 </div>
                 <span className="bg-gradient-to-t from-black absolute bottom-0 left-0 h-[120px] w-full" />

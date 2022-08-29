@@ -1,19 +1,25 @@
+import { fetchSearch } from "fetch";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { fetchData } from "../fetch/fetchData";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 const Search = () => {
   const [value, setValue] = useState("");
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any[]>([]);
+  const router = useRouter();
+  const { category } = router.query;
 
-  const activate = value
-    ? "translate-y-4 visible opacity-100"
-    : "invisible opacity-0";
+  const activate =
+    data.length > 0
+      ? "translate-y-4 visible opacity-100"
+      : "invisible opacity-0";
 
-  useEffect(() => {
-    fetchData("movie").then((result) => setData(result));
-  }, [value]);
+  const handleClick = async () => {
+    const result = await fetchSearch<typeof category, string>(category, value);
+    setData(result);
+    console.log(data);
+  };
 
   return (
     <div className="relative">
@@ -22,12 +28,15 @@ const Search = () => {
         <input
           onChange={(e) => setValue(e.target.value)}
           value={value}
-          className="bg-transparent rounded-xl py-2 w-[400px] px-4 focus:outline-0"
-          placeholder="Search Movies"
+          className="bg-transparent rounded-xl py-2 max-w-[400px] px-4 focus:outline-0"
+          placeholder={"Search " + category}
         ></input>
         <span className="border-l-2 opacity-10 h-[20px]"></span>
-        <button className="flex px-5 h-full items-center opacity-50">
-          <Image height={16} width={16} src="/icons/search.svg" alt=""></Image>
+        <button
+          onClick={handleClick}
+          className="flex px-5 h-full items-center opacity-50"
+        >
+          <Image height={16} width={16} src="/icons/search.svg" alt="" />
         </button>
       </div>
       <div
@@ -48,25 +57,28 @@ const Search = () => {
             return (
               <Link
                 key={i}
-                href={"/view/" + id}
+                href={category + "/details/" + id}
                 className="flex gap-4 items-center"
               >
-                <div>
-                  <Image
-                    className="w-[100px] h-auto rounded-md"
-                    layout="fill"
-                    src={src}
-                    alt=""
-                  />
+                <a>
+                  <div className="relative w-full aspect-[2/3]">
+                    <Image
+                      className="rounded-md"
+                      layout="fill"
+                      src={src}
+                      alt=""
+                    />
+                  </div>
                   <div className="flex flex-col">
                     <span className="text-lg">{original_title}</span>
                     <span className="text-sm">Rate : {vote_average}</span>
                   </div>
-                </div>
+                </a>
               </Link>
             );
           })}
         </ul>
+        <p className="mt-[20px]">Total results : {data.length}</p>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ export const fetchWatchProviders = async <T>(category: T, id: T) => {
   try {
     const response = await fetch(url);
     const result = await response.json();
-    return result.results;
+    return result.results.ID;
   } catch (error) {
     console.log(error);
   }

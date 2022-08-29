@@ -5,54 +5,51 @@ import Search from "./Search";
 
 const Header = () => {
   const router = useRouter();
-  const category = router.query.category;
+  const { category } = router.query;
 
   const activate = {
-    movie: category === "movie" ? "opacity-100" : "",
-    tv: category === "tv" ? "opacity-100" : "",
-    person: category === "person" ? "opacity-100" : "",
+    movie: category === "movie" ? "opacity-100" : "opacity-50",
+    tv: category === "tv" ? "opacity-100" : "opacity-50",
+    person: category === "person" ? "opacity-100" : "opacity-50",
   };
   return (
     <div className="container absolute z-10">
-      <header className="bg-gradient-to-b from-black via-black flex justify-between items-center text-white">
-        <nav className="flex items-center gap-12 h-[100px]">
-          <Link
-            href="/movie"
-            className={
-              "opacity-50 hover:opacity-100 hover:scale-110 transition-all " +
-              activate.movie
-            }
-          >
-            Movie
+      <header className="px-3 md:px-0 h-[100px] bg-gradient-to-b from-black via-black flex justify-between items-center text-white">
+        <nav className="hidden md:flex items-center gap-12">
+          <Link href="/movie">
+            <a
+              className={
+                "opacity-50 hover:opacity-100 hover:scale-110 transition-all " +
+                activate.movie
+              }
+            >
+              Movie
+            </a>
           </Link>
-          <Link
-            href="/tv"
-            className={
-              "opacity-50 hover:opacity-100 hover:scale-110 transition-all " +
-              activate.tv
-            }
-          >
-            Tv
+          <Link href="/tv">
+            <a
+              className={
+                "opacity-50 hover:opacity-100 hover:scale-110 transition-all " +
+                activate.tv
+              }
+            >
+              Tv
+            </a>
           </Link>
-          <Link
-            href="/person"
-            className={
-              "opacity-50 hover:opacity-100 hover:scale-110 transition-all " +
-              activate.person
-            }
-          >
-            Person
-          </Link>
-          <Link
-            href="/networks"
-            className="opacity-50 hover:opacity-100 hover:scale-110 transition-all"
-          >
-            Networks
+          <Link href="/person">
+            <a
+              className={
+                "opacity-50 hover:opacity-100 hover:scale-110 transition-all " +
+                activate.person
+              }
+            >
+              Person
+            </a>
           </Link>
         </nav>
         <div className="flex items-center gap-6">
           <Search />
-          <Button label="Sign Up" />
+          <Button className="hidden md:block" label="Sign Up" />
         </div>
       </header>
     </div>

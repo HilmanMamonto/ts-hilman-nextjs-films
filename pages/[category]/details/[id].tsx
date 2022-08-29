@@ -23,10 +23,15 @@ type TFilm = {
   seasons: any[];
 };
 
+type TWatchProviders = {
+  buy: any[];
+  flatrate: any[];
+};
+
 type TDetails = {
   film: TFilm;
-  videos: any[];
-  watchProviders: any[];
+  videos: [];
+  watchProviders: TWatchProviders;
 };
 
 const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
@@ -50,6 +55,8 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
   if (release_date) release_date.split("-")[0];
   if (first_air_date) first_air_date.split("-")[0];
   const imgUrl = BASE_IMG_ORIGINAL + imgAs;
+
+  const { buy, flatrate } = watchProviders;
 
   useEffect(() => {
     window.innerWidth < 500 ? setImgAs(poster_path) : setImgAs(backdrop_path);
@@ -116,11 +123,8 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
         )}
         {seasons && <SeasonsList data={seasons} />}
         {/* <Videos /> */}
-        {watchProviders && (
-          <WatchProviders
-            title="Watch Providers"
-            data={watchProviders.flatrate}
-          />
+        {(buy || flatrate) && (
+          <WatchProviders title="Watch Providers" data={buy ? buy : flatrate} />
         )}
       </section>
     </main>
@@ -133,11 +137,12 @@ export const getServerSideProps: GetServerSideProps<TDetails> = async (ctx) => {
   const film = await fetchFilmDetails<CategoryId>(category, id);
   const videos = await fetchVideos<CategoryId>(category, id);
   const watchProviders = await fetchWatchProviders<CategoryId>(category, id);
+
   return {
     props: {
-      film,
-      videos,
-      watchProviders,
+      film: film ? film : [],
+      videos: videos ? videos : [],
+      watchProviders: watchProviders ? watchProviders : [],
     },
   };
 };

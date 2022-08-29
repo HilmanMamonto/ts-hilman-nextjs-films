@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-type Card = {
+type TCard = {
   id: number;
   param?: string | string[];
   title: string;
@@ -9,21 +9,21 @@ type Card = {
   src: string;
 };
 
-const Card = ({ id, param, title = "", rate = 0, src }: Card) => {
+const Card = ({ id, param, title = "", rate = 0, src }: TCard) => {
   return (
     <Link href={"/" + param + "/details/" + id}>
       <a>
         <div className="relative">
-          <span className="bg-white absolute rounded-md w-[25px] text-center right-3 top-2 opacity-50 text-xs border-1 text-black">
+          <span className="bg-white absolute z-[2] rounded-md w-[30px] md:w-[25px] text-center right-3 top-2 opacity-50 text-sm md:text-xs border-1 text-black">
             {rate}
           </span>
-          <div className="bg-black-500 rounded-[10px] aspect-[2/3]">
+          <div className="relative w-full rounded-[10px] bg-black-500 aspect-[2/3]">
             <Image
               className="rounded-[10px]"
               objectFit="cover"
               layout="fill"
               src={src}
-              alt="title"
+              alt={title}
             />
           </div>
           <span className="absolute bottom-0 h-[120px] left-0 w-full bg-gradient-to-t from-black "></span>

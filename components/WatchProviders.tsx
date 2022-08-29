@@ -15,16 +15,21 @@ const WatchProviders: ComponentType<TWatchProviders> = ({
   return (
     <div className="md:container mx-auto">
       <h1 className="text-lg text-center mb-5">{title}</h1>
-      <div className="flex justify-center gap-5">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-5">
         {data.map(({ logo_path }, i) => {
           return (
-            <Link
-              href="/"
-              className="relative w-fit p-10 rounded-3xl bg-white bg-opacity-5 shadow-lg flex flex-col items-center justify-center"
-              key={i}
-            >
-              <Image layout="fill" src={BASE_IMG_W500 + logo_path} alt="" />
-            </Link>
+            <div key={i}>
+              <div className="bg-black-500 w-fit p-4 rounded-3xl drop-shadow">
+                <a className="relative w-[50px] aspect-square bg-opacity-5 shadow-lg flex flex-col items-center justify-center">
+                  <Image
+                    className="rounded-xl"
+                    layout="fill"
+                    src={BASE_IMG_W500 + logo_path}
+                    alt=""
+                  />
+                </a>
+              </div>
+            </div>
           );
         })}
       </div>
