@@ -2,12 +2,13 @@ import { fetchSearch } from "fetch";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Search = () => {
   const [value, setValue] = useState("");
   const [data, setData] = useState<any[]>([]);
   const router = useRouter();
+  const ref = useRef<HTMLDivElement>(null!);
   const { category } = router.query;
 
   const activate =
@@ -18,11 +19,22 @@ const Search = () => {
   const handleClick = async () => {
     const result = await fetchSearch<typeof category, string>(category, value);
     setData(result);
-    console.log(data);
   };
 
+  const handleClickOutside = (e) => {
+    const { target } = e;
+    if (!target.contains(ref.current)) {
+      console.log("outside");
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
   return (
-    <div className="relative">
+    <div ref={ref} className="relative">
       <div className="bg-black-500 rounded-xl flex items-center relative overflow-hidden">
         <span className="absolute bg-white blur-3xl w-[200px] h-[50px] left-0 bottom-[-40px] opacity-10"></span>
         <input

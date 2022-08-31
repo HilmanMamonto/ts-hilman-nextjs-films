@@ -1,7 +1,6 @@
 import { fetchPersonDetails } from "fetch/fetchPersonDetails";
 import { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import { ParsedUrlQuery } from "querystring";
 import Image from "next/image";
 import { BASE_IMG_ORIGINAL } from "globalConst";
 

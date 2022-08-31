@@ -50,6 +50,11 @@ const Header = () => {
         <div className="flex items-center gap-6">
           <Search />
           <Button className="hidden md:block" label="Sign Up" />
+          <button className="w-[24px] flex flex-col gap-[6px]">
+            <label className="w-full h-[3px] bg-red"></label>
+            <label className="w-full h-[3px] bg-red"></label>
+            <label className="w-full h-[3px] bg-red"></label>
+          </button>
         </div>
       </header>
     </div>
