@@ -1,0 +1,9 @@
+<svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M42 22C42 33.0457 33.0457 42 22 42C10.9543 42 2 33.0457 2 22C2 10.9543 10.9543 2 22 2C33.0457 2 42 10.9543 42 22Z" stroke="white" stroke-width="4"/>
+<circle cx="22" cy="12" r="4" fill="white"/>
+<circle cx="22" cy="32" r="4" fill="white"/>
+<circle cx="32" cy="22" r="4" transform="rotate(90 32 22)" fill="white"/>
+<circle cx="12" cy="22" r="4" transform="rotate(90 12 22)" fill="white"/>
+<circle cx="22" cy="22" r="2" fill="white"/>
+<line x1="21" y1="42" x2="44" y2="42" stroke="white" stroke-width="4"/>
+</svg>

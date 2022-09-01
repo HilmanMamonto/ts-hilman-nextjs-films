@@ -8,6 +8,8 @@ import Carousel from "components/Carousel";
 import Button from "components/Button";
 import SeasonsList from "components/SeasonsList";
 import WatchProviders from "components/WatchProviders";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 type TFilm = {
   release_date: string;
@@ -57,6 +59,7 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
   const imgUrl = BASE_IMG_ORIGINAL + imgAs;
 
   const { buy, flatrate } = watchProviders;
+  const router = useRouter();
 
   useEffect(() => {
     window.innerWidth < 500 ? setImgAs(poster_path) : setImgAs(backdrop_path);
@@ -71,6 +74,12 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="snap-start h-screen relative w-full text-white bg-cover">
+        <button
+          onClick={() => router.back()}
+          className="absolute cursor-pointer top-0 z-20 pl-3 mt-5"
+        >
+          back
+        </button>
         <div className="relative w-full h-full">
           {imgAs && (
             <Image
@@ -108,7 +117,7 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
               );
             })}
           </ul>
-          <p className="tracking-wide max-w-[270px] max-h-[100px] overflow-auto md:max-w-[600px] mb-10 font-light">
+          <p className="tracking-wide max-w-[270px] max-h-[100px] overflow-auto md:max-w-[600px] mb-10 font-thin">
             {overview}
           </p>
           <div className="flex gap-3">

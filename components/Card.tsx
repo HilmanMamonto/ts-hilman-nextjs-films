@@ -35,7 +35,7 @@ const Card = ({ id, param, title = "", rate = 0, src }: TCard) => {
           </div>
           <span className="absolute bottom-0 h-[120px] left-0 w-full bg-gradient-to-t from-black "></span>
         </div>
-        <h1 className="text-white abosolute">{title}</h1>
+        <h1 className="text-white abosolute font-thin">{title}</h1>
       </a>
     </Link>
   );

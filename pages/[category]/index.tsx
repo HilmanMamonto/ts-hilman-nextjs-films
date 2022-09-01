@@ -8,6 +8,7 @@ import { BASE_IMG_ORIGINAL } from "globalConst";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useGlobalFilms } from "context/hooks";
+import Image from "next/image";
 
 type TCategory = {
   films: any[];
@@ -31,16 +32,11 @@ const Category: NextPage<TCategory> = ({ films }) => {
     DATA_FILMS.results.length > 0 ? DATA_FILMS.results : films;
   const [dataFilms, setDataFilms] = useState<any[]>(initialFilms);
   const [page, setPage] = useState<number>(1);
+  const [isIntersecting, setIntersecting] = useState<boolean>(false);
 
-  const handleScroll = async () => {
-    if (window.scrollY + window.innerHeight === document.body.scrollHeight) {
-      const results: any[] = await fetchData(category, page + 1);
-      setDataFilms([...dataFilms, ...results]);
-      setPage(page + 1);
-      updateDataFilms([...dataFilms, ...results], page + 1, window.scrollY);
-    } else {
-      updateDataFilms(dataFilms, page, window.scrollY);
-    }
+  const handleScroll = () => {
+    console.log(dataFilms);
+    updateDataFilms(dataFilms, page, window.scrollY);
   };
 
   useEffect(() => {
@@ -56,7 +52,26 @@ const Category: NextPage<TCategory> = ({ films }) => {
 
   useEffect(() => {
     window.scrollTo(0, DATA_FILMS.scrollPos);
+    const observer = new IntersectionObserver(
+      (entry) => {
+        if (entry[0].isIntersecting) setIntersecting(true);
+      },
+      { threshold: 0.5 }
+    );
+    const loading = document.querySelector(".loading") as HTMLElement;
+    observer.observe(loading);
   }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      setIntersecting(false);
+      const results: any[] = await fetchData(category, page + 1);
+      setDataFilms([...dataFilms, ...results]);
+      setPage(page + 1);
+      updateDataFilms([...dataFilms, ...results], page + 1, window.scrollY);
+    };
+    if (isIntersecting) fetch();
+  }, [isIntersecting]);
 
   return (
     <main className="bg-black h-full overflow-y-auto">
@@ -109,6 +124,15 @@ const Category: NextPage<TCategory> = ({ films }) => {
               );
             }
           )}
+        </div>
+        <div className="my-20 text-center">
+          <Image
+            className="animate-spin loading"
+            width={32}
+            height={32}
+            src="/icons/loading.svg"
+            alt=""
+          />
         </div>
       </section>
     </main>
