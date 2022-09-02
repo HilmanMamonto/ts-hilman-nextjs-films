@@ -3,8 +3,13 @@ import { useRouter } from "next/router";
 import Button from "./Button";
 import Search from "./Search";
 import Image from "next/image";
+import { ComponentType } from "react";
 
-const Header = () => {
+type THeader = {
+  hasGradent: boolean;
+};
+
+const Header: ComponentType<THeader> = ({ hasGradent }) => {
   const router = useRouter();
   const { category } = router.query;
 
@@ -13,9 +18,17 @@ const Header = () => {
     tv: category === "tv" ? "opacity-100" : "opacity-50",
     person: category === "person" ? "opacity-100" : "opacity-50",
   };
+
+  const gradient = hasGradent ? "bg-gradient-to-b" : "";
+
   return (
-    <div className="container fixed z-10">
-      <header className="px-3 md:px-0 h-[100px] bg-gradient-to-b from-black via-black flex justify-between items-center text-white">
+    <div className="container fixed z-20">
+      <header
+        className={
+          "px-3 md:px-0 h-[100px] from-black via-black flex justify-between items-center text-white " +
+          gradient
+        }
+      >
         <div className="flex gap-12">
           <Link href="/movie">
             <a className="mr-6 md:mr-0 shrink-0 relative flex justify-center">
@@ -62,7 +75,11 @@ const Header = () => {
         </div>
         <div className="w-full md:w-fit justify-between md:justify-start flex items-center gap-4 lg:gap-6 ">
           <Search />
-          <Button className="hidden md:block" label="Sign Up" />
+          <Button
+            onClick={() => ""}
+            className="hidden md:block"
+            label="Sign Up"
+          />
           <button className="shrink-0 w-[24px] flex md:hidden flex-col gap-[6px]">
             <label className="w-full h-[3px] bg-white rounded-[100px]"></label>
             <label className="w-full h-[3px] bg-white rounded-[100px]"></label>

@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useGlobalFilms } from "context/hooks";
 import Image from "next/image";
+import HeroCarousel from "components/HeroCarousel";
 
 type TCategory = {
   films: any[];
@@ -35,9 +36,12 @@ const Category: NextPage<TCategory> = ({ films }) => {
   const [isIntersecting, setIntersecting] = useState<boolean>(false);
 
   const handleScroll = () => {
-    console.log(dataFilms);
     updateDataFilms(dataFilms, page, window.scrollY);
   };
+
+  useEffect(() => {
+    updateDataFilms(films, page, 0);
+  }, []);
 
   useEffect(() => {
     document.addEventListener("scroll", handleScroll);
@@ -74,7 +78,7 @@ const Category: NextPage<TCategory> = ({ films }) => {
   }, [isIntersecting]);
 
   return (
-    <main className="bg-black h-full overflow-y-auto">
+    <main className="bg-black h-full overflow-y-auto relative">
       <Head>
         <title>
           Hilman App | {category} with {dataFilms.length} results
@@ -88,42 +92,45 @@ const Category: NextPage<TCategory> = ({ films }) => {
         <span className="absolute w-[150px] h-[150px] top-40 bg-red right-0 blur-3xl opacity-20"></span>
       </span>
       <div className="container mx-auto">
-        <Header />
+        <Header hasGradent={false} />
       </div>
-      <section className="container px-3 md:px-0 mx-auto pt-[100px] min-h-screen w-full">
-        <div className="grid md:grid-cols-5 sm:grid-cols-3 gap-x-4 gap-y-6">
-          {dataFilms.map(
-            (
-              {
-                original_title,
-                original_name,
-                name,
-                poster_path,
-                vote_average,
-                profile_path,
-                id,
-              }: TFilms,
-              i
-            ) => {
-              let src: string = "";
-              if (poster_path) src = BASE_IMG_ORIGINAL + poster_path;
-              if (profile_path) src = BASE_IMG_ORIGINAL + profile_path;
-              let title: string = "";
-              if (original_title) title = original_title;
-              if (original_name) title = original_name;
-              if (name) title = name;
-              return (
-                <Card
-                  key={i}
-                  param={category}
-                  id={id}
-                  title={title}
-                  src={src}
-                  rate={vote_average}
-                />
-              );
-            }
-          )}
+      <HeroCarousel />
+      <section className="absolute z-10 min-h-screen w-full">
+        <div className="w-full container px-3 md:px-0 mx-auto">
+          <div className="translate-y-[-100px] grid md:grid-cols-5 sm:grid-cols-3 gap-x-4 gap-y-6">
+            {dataFilms.map(
+              (
+                {
+                  original_title,
+                  original_name,
+                  name,
+                  poster_path,
+                  vote_average,
+                  profile_path,
+                  id,
+                }: TFilms,
+                i
+              ) => {
+                let src: string = "";
+                if (poster_path) src = BASE_IMG_ORIGINAL + poster_path;
+                if (profile_path) src = BASE_IMG_ORIGINAL + profile_path;
+                let title: string = "";
+                if (original_title) title = original_title;
+                if (original_name) title = original_name;
+                if (name) title = name;
+                return (
+                  <Card
+                    key={i}
+                    param={category}
+                    id={id}
+                    title={title}
+                    src={src}
+                    rate={vote_average}
+                  />
+                );
+              }
+            )}
+          </div>
         </div>
         <div className="my-20 text-center">
           <Image

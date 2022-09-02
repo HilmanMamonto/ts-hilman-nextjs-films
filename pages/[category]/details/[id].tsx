@@ -121,8 +121,12 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
             {overview}
           </p>
           <div className="flex gap-3">
-            <Button label="Rate Now" />
-            <Button variant="secondary" label="View Trailer" />
+            <Button onClick={() => ""} label="Rate Now" />
+            <Button
+              onClick={() => ""}
+              variant="secondary"
+              label="View Trailer"
+            />
           </div>
         </div>
       </section>

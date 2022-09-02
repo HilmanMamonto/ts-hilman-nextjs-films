@@ -41,7 +41,7 @@ const Search = () => {
 
   return (
     <div ref={ref} className="relative w-full">
-      <div className="bg-black-500 rounded-xl flex items-center relative overflow-hidden">
+      <div className="bg-black-500 opacity-80 rounded-xl flex items-center relative overflow-hidden">
         <span className="absolute bg-white blur-3xl w-[200px] h-[50px] left-0 bottom-[-40px] opacity-10"></span>
         <input
           onChange={(e) => setValue(e.target.value)}

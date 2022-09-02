@@ -1,14 +1,18 @@
-interface ButtonType {
+import { ComponentType } from "react";
+
+type ButtonType = {
   label: string;
   variant?: string;
   className?: string;
-}
+  onClick: () => void;
+};
 
-const Button = ({
+const Button: ComponentType<ButtonType> = ({
   label = "label",
   variant = "primary",
   className,
-}: ButtonType) => {
+  onClick,
+}) => {
   interface Variants {
     [key: string]: string;
   }
@@ -19,7 +23,11 @@ const Button = ({
     secondary:
       "w-fit font-thin px-7 py-2 bg-white bg-opacity-10 backdrop-blur-sm  h-fit rounded-xl whitespace-nowrap ",
   };
-  return <button className={variants[variant] + className}>{label}</button>;
+  return (
+    <button onClick={onClick} className={variants[variant] + className}>
+      {label}
+    </button>
+  );
 };
 
 export default Button;
