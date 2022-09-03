@@ -41,7 +41,7 @@ const Category: NextPage<TCategory> = ({ films }) => {
 
   useEffect(() => {
     updateDataFilms(films, page, 0);
-  }, []);
+  }, [category]);
 
   useEffect(() => {
     document.addEventListener("scroll", handleScroll);

@@ -1,7 +1,6 @@
 import { RootContext } from "context";
 import { BASE_IMG_ORIGINAL } from "globalConst";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import Button from "./Button";
@@ -11,11 +10,13 @@ const HeroCarousel = () => {
   const { category } = router.query;
   const { state } = useContext(RootContext);
   const [dataFilms, setDataFilms] = useState<any[]>([]);
-  const [index, setIndex] = useState<number>(2);
+  const [index, setIndex] = useState<number>(3);
 
   useEffect(() => {
-    setDataFilms(state.globalState.dataFilms.results);
-  }, [state]);
+    if (category !== "person") {
+      setDataFilms(state.globalState.dataFilms.results);
+    }
+  }, [category, state]);
 
   return (
     <section className="relative text-white h-screen">
