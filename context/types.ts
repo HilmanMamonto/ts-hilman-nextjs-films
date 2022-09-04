@@ -1,7 +1,12 @@
 export type InitialState = {
   globalState: {
     age: number;
-    dataFilms: { page: number; scrollPos: number; results: any[] };
+    dataFilms: {
+      page: number;
+      scrollPos: number;
+      results: any[];
+      category: string;
+    };
   };
 };
 

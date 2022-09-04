@@ -36,22 +36,24 @@ const Category: NextPage<TCategory> = ({ films }) => {
   const [isIntersecting, setIntersecting] = useState<boolean>(false);
 
   const handleScroll = () => {
-    updateDataFilms(dataFilms, page, window.scrollY);
+    console.log(window.scrollY);
+    console.log("scrolled");
+    updateDataFilms(dataFilms, category, page, window.scrollY);
   };
 
   useEffect(() => {
-    updateDataFilms(films, page, 0);
-  }, [category]);
-
-  useEffect(() => {
-    document.addEventListener("scroll", handleScroll);
-    return () => document.removeEventListener("scroll", handleScroll);
+    const main = document.querySelector("category-main") as HTMLElement;
+    main?.addEventListener("scroll", handleScroll);
+    return () => main?.removeEventListener("scroll", handleScroll);
   });
 
   useEffect(() => {
-    fetchData(category, 1).then((value) => {
-      setDataFilms(value);
-    });
+    if (category != DATA_FILMS.category) {
+      fetchData(category, 1).then((value) => {
+        setDataFilms(value);
+      });
+      updateDataFilms(dataFilms, category, page, 0);
+    }
   }, [category]);
 
   useEffect(() => {
@@ -72,13 +74,21 @@ const Category: NextPage<TCategory> = ({ films }) => {
       const results: any[] = await fetchData(category, page + 1);
       setDataFilms([...dataFilms, ...results]);
       setPage(page + 1);
-      updateDataFilms([...dataFilms, ...results], page + 1, window.scrollY);
+      updateDataFilms(
+        [...dataFilms, ...results],
+        category,
+        page + 1,
+        window.scrollY
+      );
     };
     if (isIntersecting) fetch();
   }, [isIntersecting]);
 
   return (
-    <main className="bg-black h-full overflow-y-auto relative">
+    <main
+      id="category-main"
+      className="bg-black h-full overflow-y-auto relative"
+    >
       <Head>
         <title>
           Hilman App | {category} with {dataFilms.length} results
