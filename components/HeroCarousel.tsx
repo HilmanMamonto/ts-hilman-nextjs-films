@@ -14,9 +14,11 @@ const HeroCarousel = () => {
 
   useEffect(() => {
     if (category !== "person") {
-      setDataFilms(state.globalState.dataFilms.results);
+      setDataFilms(state.globalState.dataFilms.films);
     }
   }, [category, state]);
+
+  console.log(index);
 
   return (
     <section className="relative text-white h-screen">
@@ -36,7 +38,7 @@ const HeroCarousel = () => {
                   />
                 </div>
                 <div className="absolute flex items-center justify-center w-full h-full z-10 top-0 left-0">
-                  <div className="container">
+                  <div className="container relative">
                     <h1 className="text-6xl font-bold mb-4">{title}</h1>
                     <p className="font-thin max-w-[600px] max-h-[200px] overflow-auto mb-4">
                       {overview}
@@ -46,6 +48,21 @@ const HeroCarousel = () => {
                       label="View"
                       variant="secondary"
                     />
+                    <button
+                      onClick={() => {
+                        index < dataFilms.length - 1 ? setIndex(index + 1) : "";
+                      }}
+                      className="absolute z-10 right-0 inset-y-1/2"
+                    >
+                      <div className="bg-white flex rounded-full p-5 bg-opacity-10 backdrop-blur-sm">
+                        <Image
+                          width={26}
+                          height={26}
+                          src="/icons/arrow-right.svg"
+                          alt=""
+                        />
+                      </div>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -54,16 +71,6 @@ const HeroCarousel = () => {
         }
       )}
       <div className="absolute z-[1] h-[300px] bottom-0 w-full bg-gradient-to-t from-black" />
-      <button
-        onClick={() => {
-          index < dataFilms.length ? setIndex(index + 1) : "";
-        }}
-        className="absolute z-10 right-0 inset-y-1/2 mr-8"
-      >
-        <div className="bg-white flex rounded-full p-5 bg-opacity-10 backdrop-blur-sm">
-          <Image width={26} height={26} src="/icons/arrow-right.svg" alt="" />
-        </div>
-      </button>
     </section>
   );
 };

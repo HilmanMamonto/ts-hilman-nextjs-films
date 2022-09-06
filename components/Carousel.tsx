@@ -7,6 +7,7 @@ import {
   ComponentType,
 } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 type TCarousel = {
   data: any[];
@@ -17,6 +18,7 @@ const Carousel: ComponentType<TCarousel> = ({ data = [], className }) => {
   const [current, setCurrent] = useState(0);
   const ref = useRef<HTMLUListElement>(null!);
   const refIndicator = useRef<HTMLUListElement>(null!);
+  const router = useRouter();
 
   useEffect(() => {
     // for button next and prev
@@ -63,6 +65,7 @@ const Carousel: ComponentType<TCarousel> = ({ data = [], className }) => {
 
   return (
     <section className={className}>
+      {/* indicator */}
       <div className="flex justify-between mb-5 items-center">
         <h2 className="text-2xl">On Youtube</h2>
         <div className="max-w-[100px] lg:max-w-[200px]">
@@ -89,6 +92,7 @@ const Carousel: ComponentType<TCarousel> = ({ data = [], className }) => {
           </ul>
         </div>
       </div>
+      {/* items */}
       <div className="relative flex items-center">
         <ul
           ref={ref}
@@ -102,12 +106,16 @@ const Carousel: ComponentType<TCarousel> = ({ data = [], className }) => {
                 key={i}
                 className="relative snap-start aspect-video object-cover w-[290px] lg:w-[360px] shrink-0"
               >
-                <Image
-                  className="bg-black-500"
-                  layout="fill"
-                  src={"https://i.ytimg.com/vi/" + key + "/hqdefault.jpg"}
-                  alt=""
-                />
+                <button
+                  onClick={() => router.push(router.asPath + "#play=" + key)}
+                >
+                  <Image
+                    className="bg-black-500"
+                    layout="fill"
+                    src={"https://i.ytimg.com/vi/" + key + "/hqdefault.jpg"}
+                    alt=""
+                  />
+                </button>
               </li>
             );
           })}

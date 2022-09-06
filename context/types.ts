@@ -1,12 +1,14 @@
+export type TDataFilms = {
+  page: number;
+  scrollTop: number;
+  films: any[];
+  category: string | string[] | undefined;
+};
+
 export type InitialState = {
   globalState: {
     age: number;
-    dataFilms: {
-      page: number;
-      scrollPos: number;
-      results: any[];
-      category: string;
-    };
+    dataFilms: TDataFilms;
   };
 };
 
