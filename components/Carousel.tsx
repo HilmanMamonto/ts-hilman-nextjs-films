@@ -104,12 +104,13 @@ const Carousel: ComponentType<TCarousel> = ({ data = [], className }) => {
               <li
                 id={"video" + i}
                 key={i}
-                className="relative snap-start aspect-video object-cover w-[290px] lg:w-[360px] shrink-0"
+                className="relative snap-start aspect-video object-cover w-[290px] lg:w-[280px] shrink-0"
               >
                 <button
                   onClick={() => router.push(router.asPath + "#play=" + key)}
                 >
                   <Image
+                    objectPosition="center"
                     className="bg-black-500"
                     layout="fill"
                     src={"https://i.ytimg.com/vi/" + key + "/hqdefault.jpg"}

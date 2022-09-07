@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import VideoPlayer from "components/VideoPlayer";
 import Credit from "components/Credit";
+import Reviews from "components/Reviews";
 
 type TFilm = {
   id: number;
@@ -87,8 +88,6 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [asPath]);
 
-  console.log(film);
-
   if (!film) return <div>Data Not Found</div>;
 
   return (
@@ -99,7 +98,7 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="h-screen relative w-full text-white bg-cover">
-        <div className="fixed z-30 w-full h-[100px] flex items-center mt-5 px-3 lg:px-20">
+        <div className="absolute top-0 z-30 w-full h-[100px] flex items-center mt-5 px-3 lg:px-20">
           <button onClick={() => router.back()} className="cursor-pointer">
             <Image width={24} height={24} src="/icons/films-logo.svg" alt="" />
           </button>
@@ -159,8 +158,8 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
           <Carousel className="mb-20 px-3 lg:px-20" data={videos} />
         )}
         {seasons && <SeasonsList data={seasons} />}
-        {/* <Videos /> */}
         <Credit id={id} category={category} />
+        <Reviews id={id} category={category} />
         {(buy || flatrate) && (
           <WatchProviders title="Watch Providers" data={buy ? buy : flatrate} />
         )}

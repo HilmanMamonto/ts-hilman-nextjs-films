@@ -18,8 +18,6 @@ const HeroCarousel = () => {
     }
   }, [category, state]);
 
-  console.log(index);
-
   return (
     <section className="relative text-white h-screen">
       {dataFilms?.map(

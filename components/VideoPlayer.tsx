@@ -5,8 +5,6 @@ type TComponentElement = {
   data: { type: string; key: string };
 };
 
-type TData = { type: string; key: string };
-
 const VideoPlayer: ComponentType<TComponentElement> = ({ data }) => {
   const router = useRouter();
 
