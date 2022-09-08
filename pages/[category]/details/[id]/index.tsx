@@ -36,7 +36,7 @@ type TWatchProviders = {
 
 type TDetails = {
   film: TFilm;
-  videos: [];
+  videos: any[];
   watchProviders: TWatchProviders;
 };
 
@@ -84,9 +84,19 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
       );
       setVideo(videoSelected[0]);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [asPath]);
+
+  // key trailer
+  let keyTrailer = "";
+  let i = 0;
+  while (i < videos.length) {
+    if (videos[i].type === "Trailer") {
+      keyTrailer = videos[i].key;
+      break;
+    }
+    i++;
+  }
 
   if (!film) return <div>Data Not Found</div>;
 
@@ -98,11 +108,13 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="h-screen relative w-full text-white bg-cover">
-        <div className="absolute top-0 z-30 w-full h-[100px] flex items-center mt-5 px-3 lg:px-20">
-          <button onClick={() => router.back()} className="cursor-pointer">
-            <Image width={24} height={24} src="/icons/films-logo.svg" alt="" />
-          </button>
-        </div>
+        <button
+          onClick={() => router.push("/" + category)}
+          className="absolute pl-3 md:pl-20 mt-10 top-0 z-30 cursor-pointer flex font-thin items-center gap-2"
+        >
+          <Image width={10} height={10} src="/icons/arrow-left.svg" alt="" />
+          back
+        </button>
         <div className="relative w-full h-full">
           {imgAs && (
             <Image
@@ -146,7 +158,13 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
           <div className="flex gap-3">
             <Button onClick={() => ""} label="Rate Now" />
             <Button
-              onClick={() => ""}
+              onClick={() => {
+                if (!keyTrailer) {
+                  alert("There is no trailer");
+                  return;
+                }
+                router.push(router.asPath + "#play=" + keyTrailer);
+              }}
               variant="secondary"
               label="View Trailer"
             />

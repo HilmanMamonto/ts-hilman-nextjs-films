@@ -29,6 +29,13 @@ const Credit: ComponentType<TCredit> = ({ id, category }) => {
             fetchCredit(id, category)
               .then((value) => {
                 setCredit(value);
+                if (value.cast.length <= 8) {
+                  setSeeAll({ ...seeAll, cast: true });
+                  console.log("lest than");
+                }
+                if (value.crew.length <= 8) {
+                  setSeeAll({ ...seeAll, crew: true });
+                }
                 setStatus("success");
               })
               .catch(() => setStatus("error"));
@@ -144,7 +151,7 @@ const Credit: ComponentType<TCredit> = ({ id, category }) => {
           <div className="relative flex justify-center">
             <div className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-y-5 md:gap-y-10 gap-x-5">
               {crew.map(({ profile_path, job, name, id }, i) => {
-                const index = seeAll.crew ? cast.length : 8;
+                const index = seeAll.crew ? crew.length : 8;
                 if (i < index)
                   return (
                     <Link key={i} href={"/person/details/" + id}>

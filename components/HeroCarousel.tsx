@@ -9,6 +9,7 @@ const HeroCarousel = () => {
   const router = useRouter();
   const { category } = router.query;
   const { state } = useContext(RootContext);
+
   const [dataFilms, setDataFilms] = useState<any[]>([]);
   const [index, setIndex] = useState<number>(3);
 
@@ -21,24 +22,39 @@ const HeroCarousel = () => {
   return (
     <section className="relative text-white h-screen">
       {dataFilms?.map(
-        ({ backdrop_path, original_title, original_name, overview, id }, i) => {
+        (
+          {
+            backdrop_path,
+            poster_path,
+            original_title,
+            original_name,
+            overview,
+            id,
+          },
+          i
+        ) => {
           const title = original_title ? original_title : original_name;
+          const imgAs = window.innerWidth < 500 ? poster_path : backdrop_path;
+          console.log(imgAs);
+
           if (i === index) {
             return (
               <div className="relative" key={i}>
                 <div className="relative h-screen">
                   <Image
                     layout="fill"
-                    src={BASE_IMG_ORIGINAL + backdrop_path}
+                    src={BASE_IMG_ORIGINAL + imgAs}
                     alt=""
                     unoptimized
                     quality={100}
                   />
                 </div>
-                <div className="absolute flex items-center justify-center w-full h-full z-10 top-0 left-0">
+                <div className="absolute flex items-center justify-center w-full h-full px-3 md:px-0 z-10 top-0 left-0">
                   <div className="container relative">
-                    <h1 className="text-6xl font-bold mb-4">{title}</h1>
-                    <p className="font-thin max-w-[600px] max-h-[200px] overflow-auto mb-4">
+                    <h1 className="text-[2rem] md:text-6xl font-bold mb-4 max-w-[270px] md:max-w-auto">
+                      {title}
+                    </h1>
+                    <p className="font-thin max-w-[270px] md:max-w-[600px] max-h-[100px] md:max-h-[200px] overflow-auto mb-4">
                       {overview}
                     </p>
                     <Button
@@ -52,13 +68,14 @@ const HeroCarousel = () => {
                       }}
                       className="absolute z-10 right-0 inset-y-1/2"
                     >
-                      <div className="bg-white flex rounded-full p-5 bg-opacity-10 backdrop-blur-sm">
-                        <Image
-                          width={26}
-                          height={26}
-                          src="/icons/arrow-right.svg"
-                          alt=""
-                        />
+                      <div className="bg-white flex rounded-full p-2 md:p-5 bg-opacity-10 backdrop-blur-sm">
+                        <div className="relative w-[16px] h-[16px] md:w-[20px] md:h-[20px]">
+                          <Image
+                            layout="fill"
+                            src="/icons/arrow-right.svg"
+                            alt=""
+                          />
+                        </div>
                       </div>
                     </button>
                   </div>

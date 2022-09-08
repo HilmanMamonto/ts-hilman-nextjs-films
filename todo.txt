@@ -1,0 +1,9 @@
+[v] search click outside
+[v] logo back in details
+[v] hero on people
+
+===================================
+
+[] seasons
+[] grid seasons
+[] mobile humberger menu

@@ -88,10 +88,13 @@ const Category: NextPage<TCategory> = ({ films }) => {
     if (isIntersecting) fetch();
   }, [isIntersecting]);
 
+  const trasnlateY =
+    category != "person" ? "translate-y-[-100px]" : "mt-[120px]";
+
   return (
     <main
       id="category-main"
-      className="bg-black h-full overflow-y-auto relative"
+      className="bg-black h-full overflow-y-auto relative min-h-screen"
     >
       <Head>
         <title>
@@ -106,10 +109,14 @@ const Category: NextPage<TCategory> = ({ films }) => {
         <span className="absolute w-[150px] h-[150px] top-40 bg-red right-0 blur-3xl opacity-20"></span>
       </span>
       <Header hasGradent={DATA_FILMS.scrollTop > innerHeight + 10} />
-      <HeroCarousel />
+      {category != "person" && <HeroCarousel />}
       <section className="absolute z-10 min-h-screen w-full">
         <div className="w-full container px-3 md:px-0 mx-auto">
-          <div className="translate-y-[-100px] grid md:grid-cols-5 sm:grid-cols-3 gap-x-4 gap-y-6">
+          <div
+            className={
+              "grid md:grid-cols-5 sm:grid-cols-3 gap-x-4 gap-y-6 " + trasnlateY
+            }
+          >
             {DATA_FILMS.films.map(
               (
                 {

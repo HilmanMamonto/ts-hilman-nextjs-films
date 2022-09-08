@@ -1,4 +1,7 @@
-export const fetchSearch = async <T, Q>(category: T, query: Q) => {
+export const fetchSearch = async (
+  category: string | string[] | undefined,
+  query: string
+) => {
   const url =
     "https://api.themoviedb.org/3/search/" +
     category +

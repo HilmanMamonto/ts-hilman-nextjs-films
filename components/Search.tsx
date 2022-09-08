@@ -2,7 +2,7 @@ import { fetchSearch } from "fetch";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 
 const Search = () => {
   const [value, setValue] = useState<string>("");
@@ -11,26 +11,30 @@ const Search = () => {
   const ref = useRef<HTMLDivElement>(null!);
   const { category } = router.query;
   const [status, setStatus] = useState<string>("");
+  const [isActive, setActive] = useState<boolean>(false);
 
-  const activate =
-    data.length > 0 || status === "not-found"
-      ? "translate-y-4 visible opacity-100"
-      : "invisible opacity-0";
+  const activate = isActive
+    ? "translate-y-4 visible opacity-100"
+    : "invisible opacity-0";
 
   const handleClick = async () => {
     if (value === "") {
       setData([]);
-      setStatus("not-found");
+      setStatus("blank");
+      setActive(true);
       return;
     }
-    const result = await fetchSearch<typeof category, string>(category, value);
+    const result = await fetchSearch(category, value);
     setData(result);
     setStatus("found");
+    setActive(true);
   };
 
-  const handleClickOutside = (e: { target: any }) => {
+  const handleClickOutside = (e: any) => {
     const { target } = e;
-    if (!target.contains(ref.current)) {
+    if (!ref.current.contains(target)) {
+      setActive(false);
+      console.log("outside");
     }
   };
 
@@ -41,7 +45,7 @@ const Search = () => {
 
   return (
     <div ref={ref} className="relative w-full">
-      <div className="bg-black-500 opacity-80 rounded-xl flex items-center relative overflow-hidden">
+      <div className="bg-black-500 bg-opacity-50 rounded-xl flex items-center relative overflow-hidden">
         <span className="absolute bg-white blur-3xl w-[200px] h-[50px] left-0 bottom-[-40px] opacity-10"></span>
         <input
           onChange={(e) => setValue(e.target.value)}
@@ -65,6 +69,9 @@ const Search = () => {
       >
         {status === "not-found" && (
           <div className="text-center font-thin">Opss, Data Not Found!</div>
+        )}
+        {status === "blank" && (
+          <div className="text-center font-thin">Opss, Input Is Required</div>
         )}
         <ul className="flex flex-col gap-4 max-h-[400px] overflow-auto">
           {data.length > 0 &&

@@ -46,11 +46,11 @@ const Reviews: ComponentType<TReview> = ({ id, category }) => {
         id="review"
         className="px-3 lg:px-20 text-white py-2 animate-pulse"
       >
-        <h1 className="text-2xl mb-10">Loading...</h1>
+        <h1 className="text-2xl mb-10 cursor-wait">Loading...</h1>
         <div className="w-full grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-5">
           {[0, 1, 2, 3, 4, 5].map(({}, i) => {
             return (
-              <div key={i} className="flex gap-5 flex-col">
+              <div key={i} className="flex gap-5 flex-col cursor-wait">
                 <div className="flex gap-5 items-center">
                   <div className="aspect-square w-[60px] bg-black-500 rounded-full shrink-0"></div>
                   <div className="flex gap-2 flex-col w-full">

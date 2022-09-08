@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { ComponentType } from "react";
 
 type TCard = {
   id: number;
@@ -10,7 +11,13 @@ type TCard = {
   src: string;
 };
 
-const Card = ({ id, param, title = "", rate = 0, src }: TCard) => {
+const Card: ComponentType<TCard> = ({
+  id,
+  param,
+  title = "",
+  rate = 0,
+  src,
+}) => {
   const router = useRouter();
   let href: string = "";
   if (param != "person") href = "/" + param + "/details/" + id;
