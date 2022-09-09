@@ -21,6 +21,6 @@ export const fetchData = async <T>(
     const results = await response.json();
     return results.results;
   } catch (error) {
-    console.log(error);
+    console.log("error, get data " + category);
   }
 };
