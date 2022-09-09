@@ -174,5 +174,8 @@ export const getServerSideProps: GetServerSideProps<TCategory> = async (
   const { category } = ctx.query;
 
   const results: any[] = await fetchData<typeof category>(category);
+
+  console.log(results);
+
   return { props: { films: results } };
 };
