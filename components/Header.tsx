@@ -85,11 +85,11 @@ const Header: ComponentType<THeader> = ({ hasGradent = false }) => {
             </div>
             <div className="w-full md:w-fit justify-between md:justify-start flex items-center gap-4 lg:gap-6 ">
               <Search />
-              <Button
+              {/* <Button
                 onClick={() => ""}
                 className="hidden md:block"
                 label="Sign Up"
-              />
+              /> */}
               <button
                 onClick={() => setMenu(true)}
                 className="shrink-0 w-[24px] flex md:hidden flex-col gap-[6px]"

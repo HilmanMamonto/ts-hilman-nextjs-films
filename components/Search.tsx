@@ -71,7 +71,7 @@ const Search = () => {
           <div className="text-center font-thin">Opss, Data Not Found!</div>
         )}
         {status === "blank" && (
-          <div className="text-center font-thin">Opss, Input Is Required</div>
+          <div className="text-center font-thin">Search blank</div>
         )}
         <ul className="flex flex-col gap-4 max-h-[400px] overflow-auto">
           {data.length > 0 &&

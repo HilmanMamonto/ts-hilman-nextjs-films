@@ -114,7 +114,8 @@ const Category: NextPage<TCategory> = ({ films }) => {
         <div className="w-full container px-3 md:px-0 mx-auto">
           <div
             className={
-              "grid md:grid-cols-5 sm:grid-cols-3 gap-x-4 gap-y-6 " + trasnlateY
+              "grid grid-cols-2 md:grid-cols-5 sm:grid-cols-3 gap-x-4 gap-y-6 " +
+              trasnlateY
             }
           >
             {DATA_FILMS.films.map(

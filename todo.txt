@@ -4,6 +4,15 @@
 
 ===================================
 
-[] seasons
-[] grid seasons
-[] mobile humberger menu
+[v] seasons
+[v] grid seasons
+[v] mobile humberger menu
+
+===================================
+
+[v] person
+[v] title on carousel person
+[v] next prev limited on carousel person
+[v] back btn on person
+[] genre
+[v] person mobile responsive

@@ -26,11 +26,7 @@ const VideoPlayer: ComponentType<TComponentElement> = ({ data }) => {
         </div>
         <iframe
           className="aspect-video w-full bg-black-500"
-          src={
-            "//www.youtube.com/embed/" +
-            key +
-            "?autoplay=1&amp;origin=https%3A%2F%2Fwww.themoviedb.org&amp;hl=en&amp;modestbranding=1&amp;fs=1&amp;autohide=1"
-          }
+          src={"http://www.youtube.com/embed/" + key + "?vq=hd720"}
           allowFullScreen
         ></iframe>
       </div>

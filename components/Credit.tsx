@@ -58,7 +58,7 @@ const Credit: ComponentType<TCredit> = ({ id, category }) => {
     return (
       <section
         id="credit"
-        className="text-white container px-3 lg:px-20 mx-auto animate-pulse"
+        className="text-white container px-3 lg:px-20 mx-auto animate-pulse pb-20"
       >
         <section className="mb-20">
           <h1 className="text-2xl mb-5">Loading...</h1>
@@ -84,7 +84,7 @@ const Credit: ComponentType<TCredit> = ({ id, category }) => {
     return (
       <section
         id="credit"
-        className="text-white  container px-3 lg:px-20 mx-auto mb-20"
+        className="text-white  container px-3 lg:px-20 mx-auto pb-20"
       >
         <div className="w-full py-10 flex justify-center items-center border border-black-500 font-thin">
           Cast & Crew NOT FOUND
@@ -96,7 +96,7 @@ const Credit: ComponentType<TCredit> = ({ id, category }) => {
   return (
     <section
       id="credit"
-      className="text-white  container px-3 lg:px-20 mx-auto"
+      className="text-white  container px-3 lg:px-20 mx-auto pb-20"
     >
       {cast.length > 0 && (
         <section className="mb-20">

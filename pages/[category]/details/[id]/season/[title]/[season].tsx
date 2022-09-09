@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { fetchSeasonDetails } from "fetch";
-import { fetchPersonDetails } from "fetch/fetchPersonDetails";
-import { BASE_IMG_ORIGINAL, BASE_IMG_W500 } from "globalConst";
+import { BASE_IMG_ORIGINAL } from "globalConst";
 import { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -13,15 +13,17 @@ type TSeason = {
 
 const Season: NextPage<TSeason> = ({ season }) => {
   console.log(season);
-  const { poster_path, name, episodes } = season;
+  const { name, episodes } = season;
   const [index, setIndex] = useState(0);
   const ref = useRef<HTMLUListElement>(null!);
 
   useEffect(() => {
     // hanlde next prev;
-    const { children } = ref.current;
-    const child = children[index] as HTMLElement;
-    ref.current.scrollLeft = child.offsetLeft;
+    if (episodes.length > 0) {
+      const { children } = ref.current;
+      const child = children[index] as HTMLElement;
+      ref.current.scrollLeft = child.offsetLeft;
+    }
   }, [index]);
 
   const handleScroll: UIEventHandler<HTMLUListElement> = (e) => {
@@ -40,8 +42,24 @@ const Season: NextPage<TSeason> = ({ season }) => {
   };
 
   const router = useRouter();
-  const { category, id } = router.query;
+  const { category, id, title } = router.query;
   const backPath = "/" + category + "/details/" + id;
+
+  if (episodes.length === 0) {
+    return (
+      <section className="bg-black w-full min-h-screen text-white font-thin flex justify-center items-center">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-2xl">Opps!, This Season Has No Episodes...</h1>
+          <button onClick={() => router.push(backPath)}>
+            <span className="font-normal">back to </span>
+            <span className="underline">
+              {title?.toString().split("-").join(" ")}
+            </span>
+          </button>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="bg-black w-full min-h-screen text-white relative">
@@ -61,13 +79,17 @@ const Season: NextPage<TSeason> = ({ season }) => {
           height={10}
           alt=""
         />
-        back
+        <span>back to</span>
+        <div className="w-[3px] h-[3px] bg-white rounded-full"></div>
+        <span>{title?.toString().split("-").join(" ")}</span>
       </button>
       <div className="absolute top-0 w-full h-full opacity-80">
         <Image
           src={BASE_IMG_ORIGINAL + episodes[index].still_path}
           layout="fill"
           alt=""
+          priority
+          quality={100}
         />
       </div>
       <div className="absolute max-w-full pl-3 md:pl-20 z-10 bottom-0 right-0 mb-5">

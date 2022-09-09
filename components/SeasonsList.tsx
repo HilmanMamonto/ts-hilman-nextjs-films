@@ -6,17 +6,19 @@ import { useRouter } from "next/router";
 
 type TSeasonsList = {
   data: any[];
+  title: string;
 };
 
-const SeasonsList: ComponentType<TSeasonsList> = ({ data }) => {
+const SeasonsList: ComponentType<TSeasonsList> = ({ data, title = "" }) => {
   const router = useRouter();
   const { category, id } = router.query;
-  const gridCols =
-    data.length >= 4 ? "md:grid-cols-4" : "md:grid-cols-" + data.length;
+  let gridCols = "";
+  if (data.length >= 4) gridCols = "grid-cols-2 md:grid-cols-4";
+  if (data.length < 4) gridCols = "grid-cols-2 md:grid-cols-" + data.length;
+  if (data.length === 1) gridCols = "grid-cols-1";
 
   const href = "/" + category + "/details/" + id + "/season";
-
-  console.log(data);
+  const renameTitle = title.toLowerCase().split(" ").join("-");
 
   return (
     <div className="flex items-center flex-col pb-20">
@@ -28,24 +30,26 @@ const SeasonsList: ComponentType<TSeasonsList> = ({ data }) => {
       >
         {data.map(({ name, poster_path, season_number }, i) => {
           const src = poster_path ? BASE_IMG_W500 + poster_path : "";
-          if (!src) return;
-
           const season = name === "Specials" ? "specials" : season_number;
           return (
-            <Link href={href + "/" + season} className="w-fit" key={i}>
+            <Link
+              href={href + "/" + renameTitle + "/" + season}
+              className="w-fit"
+              key={i}
+            >
               <a>
                 <div className="relative">
-                  <div className="bg-black-500 rounded-t-lg relative w-full md:w-[200px] h-full aspect-[2/3]">
+                  <div className="bg-black-500 rounded-t-lg w-full md:w-[200px] h-full aspect-[2/3] relative">
                     <Image
                       layout="fill"
                       className="rounded-t-lg"
                       src={src}
-                      alt={name}
+                      alt=""
                     />
                   </div>
                   <span className="bg-gradient-to-t from-black absolute bottom-0 left-0 h-[120px] w-full hover:h-full" />
                 </div>
-                <span>{name}</span>
+                <span className="font-thin">{name}</span>
               </a>
             </Link>
           );

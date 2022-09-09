@@ -27,6 +27,7 @@ type TFilm = {
   runtime: number;
   vote_average: number;
   seasons: any[];
+  homepage: string;
 };
 
 type TWatchProviders = {
@@ -39,6 +40,21 @@ type TDetails = {
   videos: any[];
   watchProviders: TWatchProviders;
 };
+
+let month: string[] = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
   const {
@@ -54,14 +70,19 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
     runtime,
     vote_average,
     seasons,
+    homepage,
   } = film;
+
+  console.log(film);
 
   const [imgAs, setImgAs] = useState("");
   const [video, setVideo] = useState<{ type: string; key: string }>();
   const titleDisplay = title ? title : name;
-  let release = "";
-  if (release_date) release_date.split("-")[0];
-  if (first_air_date) first_air_date.split("-")[0];
+
+  const date = release_date
+    ? release_date.split("-")
+    : first_air_date.split("-");
+  const release = date[2] + " " + month[parseInt(date[1]) - 1] + " " + date[0];
   const imgUrl = BASE_IMG_ORIGINAL + imgAs;
 
   const { buy, flatrate } = watchProviders;
@@ -113,7 +134,7 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
           className="absolute pl-3 md:pl-20 mt-10 top-0 z-30 cursor-pointer flex font-thin items-center gap-2"
         >
           <Image width={10} height={10} src="/icons/arrow-left.svg" alt="" />
-          back
+          back to {category}
         </button>
         <div className="relative w-full h-full">
           {imgAs && (
@@ -130,13 +151,19 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
         </div>
         <span className="absolute h-[300px] bg-gradient-to-t from-black bottom-[-2px] z-10 w-full"></span>
         <div className="absolute left-0 bottom-0 z-20 w-full px-3 lg:px-20 mb-10 lg:mb-20">
-          <h1 className="text-[2rem] lg:text-[68px] mb-5 font-bold">
-            {titleDisplay}
+          <h1 className="text-[2rem] lg:text-[68px] mb-5 font-bold max-w-[1000px]">
+            <a href={homepage} target="_blank" rel="noreferrer">
+              {titleDisplay}
+            </a>
           </h1>
           <div className="flex items-center gap-2 mb-5 text-sm font-light">
             <span>{vote_average}</span>
-            <span className="w-[3px] h-[3px] bg-white rounded-full" />
-            <span>{runtime} minutes</span>
+            {runtime && (
+              <>
+                <span className="w-[3px] h-[3px] bg-white rounded-full" />
+                <span>{runtime} minutes</span>
+              </>
+            )}
             <span className="w-[3px] h-[3px] bg-white rounded-full" />
             <span>{release}</span>
           </div>
@@ -156,7 +183,7 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
             {overview}
           </p>
           <div className="flex gap-3">
-            <Button onClick={() => ""} label="Rate Now" />
+            <Button onClick={() => alert("on going :-D")} label="Rate Now" />
             <Button
               onClick={() => {
                 if (!keyTrailer) {
@@ -175,7 +202,7 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
         {videos.length > 0 && (
           <Carousel className="mb-20 px-3 lg:px-20" data={videos} />
         )}
-        {seasons && <SeasonsList data={seasons} />}
+        {seasons && <SeasonsList title={titleDisplay} data={seasons} />}
         <Credit id={id} category={category} />
         <Reviews id={id} category={category} />
         {(buy || flatrate) && (

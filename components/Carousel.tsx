@@ -101,23 +101,20 @@ const Carousel: ComponentType<TCarousel> = ({ data = [], className }) => {
         >
           {data.map(({ key }, i) => {
             return (
-              <li
+              <button
                 id={"video" + i}
                 key={i}
+                onClick={() => router.push(router.asPath + "#play=" + key)}
                 className="relative snap-start aspect-video object-cover w-[290px] lg:w-[280px] shrink-0"
               >
-                <button
-                  onClick={() => router.push(router.asPath + "#play=" + key)}
-                >
-                  <Image
-                    objectPosition="center"
-                    className="bg-black-500"
-                    layout="fill"
-                    src={"https://i.ytimg.com/vi/" + key + "/hqdefault.jpg"}
-                    alt=""
-                  />
-                </button>
-              </li>
+                <Image
+                  objectPosition="center"
+                  className="bg-black-500"
+                  layout="fill"
+                  src={"https://i.ytimg.com/vi/" + key + "/hqdefault.jpg"}
+                  alt=""
+                />
+              </button>
             );
           })}
         </ul>

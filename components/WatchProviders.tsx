@@ -13,7 +13,7 @@ const WatchProviders: ComponentType<TWatchProviders> = ({
   title = "title",
 }) => {
   return (
-    <div className="md:container mx-auto">
+    <div className="md:container mx-auto pb-20">
       <h1 className="text-lg text-center mb-5">{title}</h1>
       <div className="flex flex-col md:flex-row items-center justify-center gap-5">
         {data.map(({ logo_path }, i) => {

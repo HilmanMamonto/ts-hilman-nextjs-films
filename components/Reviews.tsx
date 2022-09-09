@@ -22,20 +22,17 @@ const Reviews: ComponentType<TReview> = ({ id, category }) => {
   const [status, setStatus] = useState("loading");
   const [reviews, setReviews] = useState<TStateReviews[]>([]);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (enter) => {
-        if (enter[0].isIntersecting) {
-          setTimeout(() => {
-            fetchReview(category, id).then((value) => {
-              setReviews(value.results);
-              setStatus("success");
-            });
-          }, 2000);
-          observer.unobserve(reviewDOM);
-        }
-      },
-      { threshold: 1 }
-    );
+    const observer = new IntersectionObserver((enter) => {
+      if (enter[0].isIntersecting) {
+        setTimeout(() => {
+          fetchReview(category, id).then((value) => {
+            setReviews(value.results);
+            setStatus("success");
+          });
+        }, 2000);
+        observer.unobserve(reviewDOM);
+      }
+    });
     const reviewDOM = document.querySelector("#review") as HTMLElement;
     observer.observe(reviewDOM);
   }, []);
@@ -44,7 +41,7 @@ const Reviews: ComponentType<TReview> = ({ id, category }) => {
     return (
       <section
         id="review"
-        className="px-3 lg:px-20 text-white py-2 animate-pulse"
+        className="px-3 lg:px-20 text-white py-2 animate-pulse pb-20"
       >
         <h1 className="text-2xl mb-10 cursor-wait">Loading...</h1>
         <div className="w-full grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-5">
@@ -70,6 +67,7 @@ const Reviews: ComponentType<TReview> = ({ id, category }) => {
       </section>
     );
   }
+
   if (reviews.length === 0) {
     return (
       <section className="px-3 lg:px-20 text-white">
@@ -82,8 +80,9 @@ const Reviews: ComponentType<TReview> = ({ id, category }) => {
   }
 
   return (
-    <section id="review" className="px-3 lg:px-20 text-white">
-      <h1 className="text-2xl mb-10">Reviews</h1>
+    <section id="review" className="px-3 lg:px-20 text-white pb-20">
+      <h1 className="text-2xl mb-5">Reviews</h1>
+      <div className="border-b mb-10 opacity-20"></div>
       <div className="w-full grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-5">
         {reviews.map(({ author, author_details, content }, i) => {
           const rating = author_details.rating;
@@ -121,6 +120,7 @@ const Reviews: ComponentType<TReview> = ({ id, category }) => {
           );
         })}
       </div>
+      <div className="border-b mt-10 opacity-20"></div>
     </section>
   );
 };

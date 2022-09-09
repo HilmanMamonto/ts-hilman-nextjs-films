@@ -51,7 +51,7 @@ const HeroCarousel = () => {
                 </div>
                 <div className="absolute flex items-center justify-center w-full h-full px-3 md:px-0 z-10 top-0 left-0">
                   <div className="container relative">
-                    <h1 className="text-[2rem] md:text-6xl font-bold mb-4 max-w-[270px] md:max-w-auto">
+                    <h1 className="text-[2rem] md:text-6xl font-bold mb-4 max-w-[270px] md:max-w-full">
                       {title}
                     </h1>
                     <p className="font-thin max-w-[270px] md:max-w-[600px] max-h-[100px] md:max-h-[200px] overflow-auto mb-4">
