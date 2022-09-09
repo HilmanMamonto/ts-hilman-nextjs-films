@@ -48,7 +48,7 @@ const Category: NextPage<TCategory> = ({ films }) => {
     const main = document.querySelector("#category-main") as HTMLElement;
     main.scrollTo(0, 0);
     if (category != DATA_FILMS.category) {
-      fetchData(category, 1).then((value) => {
+      fetchData(category!.toString(), 1).then((value) => {
         updateDataFilms({
           ...DATA_FILMS,
           films: value,
@@ -78,7 +78,10 @@ const Category: NextPage<TCategory> = ({ films }) => {
   useEffect(() => {
     const fetch = async () => {
       setIntersecting(false);
-      const results: any[] = await fetchData(category, DATA_FILMS.page + 1);
+      const results: any[] = await fetchData(
+        category!.toString(),
+        DATA_FILMS.page + 1
+      );
       updateDataFilms({
         ...DATA_FILMS,
         films: [...DATA_FILMS.films, ...results],
@@ -172,8 +175,8 @@ export const getServerSideProps: GetServerSideProps<TCategory> = async (
   ctx
 ) => {
   const { category } = ctx.query;
-
-  const results: any[] = await fetchData<typeof category>(category);
+  const results: any[] = await fetchData(category!.toString());
+  console.log(ctx);
 
   return { props: { films: results } };
 };
