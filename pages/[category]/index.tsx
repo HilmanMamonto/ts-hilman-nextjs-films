@@ -33,6 +33,9 @@ const Category: NextPage<TCategory> = ({ films }) => {
   const [isIntersecting, setIntersecting] = useState<boolean>(false);
   const [innerHeight, setInnerHeight] = useState<number>(0);
 
+  console.log(DATA_FILMS);
+  console.log(films);
+
   const handleScroll = (e: Event) => {
     const { scrollTop } = e.target as Element;
     updateDataFilms({ ...DATA_FILMS, category, scrollTop });
@@ -174,8 +177,6 @@ export const getServerSideProps: GetServerSideProps<TCategory> = async (
   const { category } = ctx.query;
 
   const results: any[] = await fetchData<typeof category>(category);
-
-  console.log(results);
 
   return { props: { films: results } };
 };
