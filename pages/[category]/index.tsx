@@ -33,9 +33,6 @@ const Category: NextPage<TCategory> = ({ films }) => {
   const [isIntersecting, setIntersecting] = useState<boolean>(false);
   const [innerHeight, setInnerHeight] = useState<number>(0);
 
-  console.log(DATA_FILMS);
-  console.log(films);
-
   const handleScroll = (e: Event) => {
     const { scrollTop } = e.target as Element;
     updateDataFilms({ ...DATA_FILMS, category, scrollTop });
