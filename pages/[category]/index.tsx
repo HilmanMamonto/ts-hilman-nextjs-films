@@ -155,7 +155,7 @@ const Category: NextPage<TCategory> = ({ films }) => {
             )}
           </div>
         </div>
-        <div className="my-20 text-center">
+        <div className="my-20 text-center cursor-wait">
           <Image
             className="animate-spin loading"
             width={32}
@@ -176,7 +176,6 @@ export const getServerSideProps: GetServerSideProps<TCategory> = async (
 ) => {
   const { category } = ctx.query;
   const results: any[] = await fetchData(category!.toString());
-  console.log(ctx);
 
   return { props: { films: results } };
 };
