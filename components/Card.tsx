@@ -25,7 +25,7 @@ const Card: ComponentType<TCard> = ({
   return (
     <Link href={href}>
       <a>
-        <div className="relative">
+        <div className="relative overflow-hidden">
           {param != "person" && (
             <span className="bg-white absolute z-[2] rounded-md w-[30px] md:w-[25px] text-center right-3 top-2 opacity-50 text-sm md:text-xs border-1 text-black">
               {rate}
@@ -40,7 +40,7 @@ const Card: ComponentType<TCard> = ({
               alt={title}
             />
           </div>
-          <span className="absolute bottom-0 h-[120px] left-0 w-full bg-gradient-to-t from-black "></span>
+          <span className="absolute bottom-0 translate-y-[1px] h-[120px] left-0 w-[110%] bg-gradient-to-t from-black "></span>
         </div>
         <h1 className="text-white abosolute font-thin">{title}</h1>
       </a>
