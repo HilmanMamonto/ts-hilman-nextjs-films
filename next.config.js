@@ -8,15 +8,6 @@ const nextConfig = {
   images: {
     domains: ["image.tmdb.org", "i.ytimg.com", "www.gravatar.com"],
   },
-  async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/movie",
-        permanent: false,
-      },
-    ];
-  },
 };
 
 module.exports = nextConfig;

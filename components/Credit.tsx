@@ -30,7 +30,6 @@ const Credit: ComponentType<TCredit> = ({ id, category }) => {
               setCredit(value);
               if (value.cast.length <= 8) {
                 setSeeAll({ ...seeAll, cast: true });
-                console.log("lest than");
               }
               if (value.crew.length <= 8) {
                 setSeeAll({ ...seeAll, crew: true });

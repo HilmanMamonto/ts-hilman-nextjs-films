@@ -8,7 +8,6 @@ import Carousel from "components/Carousel";
 import Button from "components/Button";
 import SeasonsList from "components/SeasonsList";
 import WatchProviders from "components/WatchProviders";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import VideoPlayer from "components/VideoPlayer";
 import Credit from "components/Credit";

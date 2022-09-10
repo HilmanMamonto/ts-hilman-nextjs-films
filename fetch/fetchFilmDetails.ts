@@ -11,7 +11,7 @@ export const fetchFilmDetails = async <T>(category: T, id: T) => {
     const response = await fetch(URL);
     const results = await response.json();
     return results;
-  } catch (error) {
-    console.log(error);
+  } catch {
+    console.log("error, get film details");
   }
 };

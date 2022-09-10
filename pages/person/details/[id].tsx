@@ -28,8 +28,6 @@ const Details: NextPage<TDetails> = ({ person, credits }) => {
   useEffect(() => {
     const { offsetLeft } = ref.current.children[index] as HTMLElement;
     ref.current.scrollLeft = offsetLeft;
-    console.log(offsetLeft);
-    console.log(index);
   }, [index]);
 
   const handleScroll: UIEventHandler<HTMLUListElement> = (e) => {
@@ -44,8 +42,6 @@ const Details: NextPage<TDetails> = ({ person, credits }) => {
       i++;
     }
   };
-
-  console.log(credits);
 
   return (
     <main className="bg-black min-h-screen overflow-x-hidden max-w-screen overflow-y-auto text-white relative">

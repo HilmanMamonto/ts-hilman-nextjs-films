@@ -34,7 +34,6 @@ const Search = () => {
     const { target } = e;
     if (!ref.current.contains(target)) {
       setActive(false);
-      console.log("outside");
     }
   };
 

@@ -35,7 +35,6 @@ const HeroCarousel = () => {
         ) => {
           const title = original_title ? original_title : original_name;
           const imgAs = window.innerWidth < 500 ? poster_path : backdrop_path;
-          console.log(imgAs);
 
           if (i === index) {
             return (

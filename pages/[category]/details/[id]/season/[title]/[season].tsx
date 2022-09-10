@@ -12,7 +12,6 @@ type TSeason = {
 };
 
 const Season: NextPage<TSeason> = ({ season }) => {
-  console.log(season);
   const { name, episodes } = season;
   const [index, setIndex] = useState(0);
   const ref = useRef<HTMLUListElement>(null!);

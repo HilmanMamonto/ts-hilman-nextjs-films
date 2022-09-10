@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 
 const Home: NextPage = () => {
@@ -11,6 +11,16 @@ const Home: NextPage = () => {
       </Head>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  if (ctx.res) {
+    ctx.res.writeHead(302, { Location: "/movie" });
+    ctx.res.end();
+  }
+  return {
+    props: {},
+  };
 };
 
 export default Home;
