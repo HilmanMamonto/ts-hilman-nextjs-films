@@ -85,7 +85,7 @@ const HeroCarousel = () => {
           }
         }
       )}
-      <div className="absolute z-[1] h-[300px] bottom-0 w-full bg-gradient-to-t from-black" />
+      <div className="absolute z-[1] h-full  lg:h-[300px] bottom-0 w-full bg-gradient-to-t from-black" />
     </section>
   );
 };

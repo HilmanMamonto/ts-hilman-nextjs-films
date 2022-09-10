@@ -22,29 +22,26 @@ const Credit: ComponentType<TCredit> = ({ id, category }) => {
 
   const intersection = () => {
     const creditDOM = document.querySelector("#credit") as HTMLElement;
-    const observer = new IntersectionObserver(
-      (entry) => {
-        if (entry[0].isIntersecting) {
-          setTimeout(() => {
-            fetchCredit(id, category)
-              .then((value) => {
-                setCredit(value);
-                if (value.cast.length <= 8) {
-                  setSeeAll({ ...seeAll, cast: true });
-                  console.log("lest than");
-                }
-                if (value.crew.length <= 8) {
-                  setSeeAll({ ...seeAll, crew: true });
-                }
-                setStatus("success");
-              })
-              .catch(() => setStatus("error"));
-            observer.unobserve(creditDOM);
-          }, 2000);
-        }
-      },
-      { threshold: 0.5 }
-    );
+    const observer = new IntersectionObserver((entry) => {
+      if (entry[0].isIntersecting) {
+        setTimeout(() => {
+          fetchCredit(id, category)
+            .then((value) => {
+              setCredit(value);
+              if (value.cast.length <= 8) {
+                setSeeAll({ ...seeAll, cast: true });
+                console.log("lest than");
+              }
+              if (value.crew.length <= 8) {
+                setSeeAll({ ...seeAll, crew: true });
+              }
+              setStatus("success");
+            })
+            .catch(() => setStatus("error"));
+          observer.unobserve(creditDOM);
+        }, 2000);
+      }
+    });
     observer.observe(creditDOM);
   };
 

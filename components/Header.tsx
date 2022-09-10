@@ -39,18 +39,13 @@ const Header: ComponentType<THeader> = ({ hasGradent = false }) => {
               showGradient2
             }
           >
-            <div className="flex gap-12">
+            <div className="flex gap-12  bg-opacity-20">
               <Link href="/movie">
-                <a className="mr-6 md:mr-0 shrink-0 relative flex justify-center">
-                  <Image
-                    width={24}
-                    height={24}
-                    src="/icons/films-logo.svg"
-                    alt=""
-                  />
+                <a className="mr-6 md:mr-0 shrink-0 relative my-auto flex justify-center w-[24px] h-[24px]">
+                  <Image layout="fill" src="/icons/films-logo.svg" alt="" />
                 </a>
               </Link>
-              <nav className="font-thin hidden md:flex items-center gap-12">
+              <nav className="font-thin hidden md:flex items-center gap-12 backdrop-blur-sm py-1 px-8 bg-black-500 bg-opacity-5 rounded-md">
                 <Link href="/movie">
                   <a
                     className={
@@ -107,7 +102,7 @@ const Header: ComponentType<THeader> = ({ hasGradent = false }) => {
             menuActivate
           }
         >
-          <ul className="flex items-center gap-20 font-thin flex-col h-full py-20">
+          <ul className=" flex items-center gap-20 font-thin flex-col h-full py-20">
             <button onClick={() => setMenu(false)}>close</button>
             <button
               onClick={() => {

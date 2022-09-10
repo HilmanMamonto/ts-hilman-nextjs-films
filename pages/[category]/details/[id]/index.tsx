@@ -73,8 +73,6 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
     homepage,
   } = film;
 
-  console.log(film);
-
   const [imgAs, setImgAs] = useState("");
   const [video, setVideo] = useState<{ type: string; key: string }>();
   const titleDisplay = title ? title : name;
@@ -149,7 +147,7 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
             />
           )}
         </div>
-        <span className="absolute h-[300px] bg-gradient-to-t from-black bottom-[-2px] z-10 w-full"></span>
+        <span className="absolute h-full lg:h-[300px] bg-gradient-to-t from-black bottom-[-2px] z-10 w-full"></span>
         <div className="absolute left-0 bottom-0 z-20 w-full px-3 lg:px-20 mb-10 lg:mb-20">
           <h1 className="text-[2rem] lg:text-[68px] mb-5 font-bold max-w-[1000px]">
             <a href={homepage} target="_blank" rel="noreferrer">
