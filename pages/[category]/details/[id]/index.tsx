@@ -181,7 +181,7 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
             {overview}
           </p>
           <div className="flex gap-3">
-            <Button onClick={() => alert("on going :-D")} label="Rate Now" />
+            {/* <Button onClick={() => alert("on going :-D")} label="Rate Now" /> */}
             <Button
               onClick={() => {
                 if (!keyTrailer) {
@@ -190,7 +190,6 @@ const Details: NextPage<TDetails> = ({ film, videos, watchProviders }) => {
                 }
                 router.push(router.asPath + "#play=" + keyTrailer);
               }}
-              variant="secondary"
               label="View Trailer"
             />
           </div>
