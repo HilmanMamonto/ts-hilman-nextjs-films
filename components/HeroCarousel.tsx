@@ -1,5 +1,5 @@
 import { RootContext } from "context";
-import { BASE_IMG_ORIGINAL } from "globalConst";
+import { BASE_IMG_ORIGINAL, BASE_IMG_W500 } from "globalConst";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
@@ -34,7 +34,10 @@ const HeroCarousel = () => {
           i
         ) => {
           const title = original_title ? original_title : original_name;
-          const imgAs = window.innerWidth < 500 ? poster_path : backdrop_path;
+          const imgAs =
+            window.innerWidth < 500
+              ? BASE_IMG_W500 + poster_path
+              : BASE_IMG_ORIGINAL + backdrop_path;
 
           if (i === index) {
             return (
@@ -42,7 +45,7 @@ const HeroCarousel = () => {
                 <div className="relative h-screen w-full">
                   <Image
                     layout="fill"
-                    src={BASE_IMG_ORIGINAL + imgAs}
+                    src={imgAs}
                     alt=""
                     quality={100}
                     objectPosition="center"
