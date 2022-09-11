@@ -18,7 +18,6 @@ const Card: ComponentType<TCard> = ({
   rate = 0,
   src,
 }) => {
-  const router = useRouter();
   let href: string = "";
   if (param != "person") href = "/" + param + "/details/" + id;
   if (param === "person") href = "/person/details/" + id;
@@ -39,7 +38,7 @@ const Card: ComponentType<TCard> = ({
                 layout="fill"
                 src={src}
                 alt={title}
-                priority
+                quality={param === "person" ? 60 : 100}
               />
             )}
           </div>

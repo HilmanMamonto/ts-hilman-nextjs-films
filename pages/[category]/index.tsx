@@ -174,7 +174,24 @@ export default Category;
 export const getServerSideProps: GetServerSideProps<TCategory> = async (
   ctx
 ) => {
+  const permision = ["movie", "person", "tv"];
   const { category } = ctx.query;
+
+  let found = false;
+  let i = 0;
+  while (i < permision.length) {
+    if (permision[i] === category) {
+      found = true;
+      break;
+    }
+    i++;
+  }
+
+  if (!found) {
+    ctx.res.writeHead(302, { Location: "/404" });
+    ctx.res.end();
+  }
+
   const results: any[] = await fetchData(category!.toString());
 
   return { props: { films: results } };
