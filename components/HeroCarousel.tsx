@@ -39,12 +39,11 @@ const HeroCarousel = () => {
           if (i === index) {
             return (
               <div className="relative" key={i}>
-                <div className="relative h-screen">
+                <div className="relative h-screen w-full">
                   <Image
                     layout="fill"
                     src={BASE_IMG_ORIGINAL + imgAs}
                     alt=""
-                    unoptimized
                     quality={100}
                   />
                 </div>
