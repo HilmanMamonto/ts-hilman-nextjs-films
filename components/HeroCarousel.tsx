@@ -36,9 +36,9 @@ const HeroCarousel = () => {
           const title = original_title ? original_title : original_name;
           const imgAs =
             window.innerWidth < 500
-              ? BASE_IMG_W500 + poster_path
+              ? BASE_IMG_ORIGINAL + poster_path
               : BASE_IMG_ORIGINAL + backdrop_path;
-
+          const quality = window.innerWidth < 500 ? 60 : 100;
           if (i === index) {
             return (
               <div className="relative" key={i}>
@@ -47,7 +47,7 @@ const HeroCarousel = () => {
                     layout="fill"
                     src={imgAs}
                     alt=""
-                    quality={100}
+                    quality={quality}
                     objectPosition="center"
                     priority
                     objectFit="cover"
