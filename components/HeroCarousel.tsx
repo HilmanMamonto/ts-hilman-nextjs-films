@@ -45,6 +45,8 @@ const HeroCarousel = () => {
                     src={BASE_IMG_ORIGINAL + imgAs}
                     alt=""
                     quality={100}
+                    objectPosition="center"
+                    priority
                   />
                 </div>
                 <div className="absolute flex items-center justify-center w-full h-full px-3 md:px-0 z-10 top-0 left-0">
