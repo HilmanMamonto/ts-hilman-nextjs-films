@@ -4,7 +4,7 @@ import Head from "next/head";
 import Card from "components/Card";
 import Header from "components/Header";
 import { fetchData } from "fetch/fetchData";
-import { BASE_IMG_ORIGINAL } from "globalConst";
+import { BASE_IMG_ORIGINAL, BASE_IMG_W500 } from "globalConst";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useGlobalFilms } from "context/hooks";
@@ -135,8 +135,8 @@ const Category: NextPage<TCategory> = ({ films }) => {
                 i
               ) => {
                 let src: string = "";
-                if (poster_path) src = BASE_IMG_ORIGINAL + poster_path;
-                if (profile_path) src = BASE_IMG_ORIGINAL + profile_path;
+                if (poster_path) src = BASE_IMG_W500 + poster_path;
+                if (profile_path) src = BASE_IMG_W500 + profile_path;
                 let title: string = "";
                 if (original_title) title = original_title;
                 if (original_name) title = original_name;

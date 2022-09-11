@@ -47,6 +47,7 @@ const HeroCarousel = () => {
                     quality={100}
                     objectPosition="center"
                     priority
+                    objectFit="cover"
                   />
                 </div>
                 <div className="absolute flex items-center justify-center w-full h-full px-3 md:px-0 z-10 top-0 left-0">

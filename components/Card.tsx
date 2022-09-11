@@ -32,13 +32,16 @@ const Card: ComponentType<TCard> = ({
             </span>
           )}
           <div className="relative w-full rounded-[10px] bg-black-500 aspect-[2/3]">
-            <Image
-              className="rounded-[10px]"
-              objectFit="cover"
-              layout="fill"
-              src={src}
-              alt={title}
-            />
+            {src && (
+              <Image
+                className="rounded-[10px]"
+                objectFit="cover"
+                layout="fill"
+                src={src}
+                alt={title}
+                priority
+              />
+            )}
           </div>
           <span className="absolute bottom-0 translate-y-[1px] h-[120px] left-0 w-[110%] bg-gradient-to-t from-black "></span>
         </div>
